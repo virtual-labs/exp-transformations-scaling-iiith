@@ -1,18 +1,36 @@
 [
-{"question":"This is a Sample Question 1?",
+{"question":" Matrix( (2,0,0,0), (0,1.5,0,0), (0,0,0.5,0), (0,0,0,1) ) Q1. The point (5,2,8) after applying the following scaling matrix becomes: <img src='images/quiz_matrix1.png'>",
 "answers":{
-            "a":"answer1",
-            "b":"answer2",
-            "c":"answer3",
-            "d":"answer4"
+            "a":"(10,3,40)",
+            "b":"(10,2,4)",
+            "c":"(2.5,3,4)",
+            "d":"(10,3,4)"
           },
 "correctAnswer":"a"},
-{"question":"This is a Sample Question 2?",
+{"question":" Q2. Applying a scaling transformation of 2 on X-axis makes the unit distance: ",
 "answers":{
-            "a":"answer1",
-            "b":"answer2",
-            "c":"answer3",
-            "d":"answer4"
+            "a":"1/4 of the original unit distance.",
+            "b":"1/2 of the original unit distance. ",
+            "c":"Same as the original unit distance. ",
+            "d":"Twice the original unit distance."
           },
-"correctAnswer":"c"} 
+"correctAnswer":"c"},
+
+    {"question":" Q3. What is the scaling vector v if A(5,4,1) gets scaled to (2.5,6,5) ? ",
+"answers":{
+            "a":" [0.5, 1.5, 5] ",
+            "b":"[2, 3, 5]",
+            "c":" [2.5, 3, 5]",
+            "d":"[2.5, 1.5, 5]"
+          },
+"correctAnswer":"a"},
+{"question":"  Q4. What is the scaling vector v if A(2,3,4) gets transformed to B(2,3,4) ? ",
+"answers":{
+            "a":"[1, 0, 0]",
+            "b":"[0, 0, 0]",
+            "c":"[1, 1, 1",
+            "d":"[1, 1, 0]"
+          },
+"correctAnswer":"c"}
+
 ]
