@@ -1,4 +1,4 @@
-Scaling multiplies the distances from the co-ordinate axes by a constant factor. The scaling matrix which scales by v<sup>x</sup>, v<sup>y</sup> and v<sup>z</sub> units looks like:
+Scaling multiplies the distances from the co-ordinate axes by a constant factor. The scaling matrix which scales by v<sup>x</sup>, v<sup>y</sup> and v<sup>z</sub> units looks like:  
 
 <img src="images/scaling-matrix.png">  
 
