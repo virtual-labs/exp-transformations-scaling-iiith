@@ -2,7 +2,7 @@ Scaling multiplies the distances from the co-ordinate axes by a constant factor.
 
 <img src="images/scaling-matrix.png">  
 
-On multiplication with a vector, the expected result is obtained:
+On multiplication with a vector, the expected result is obtained:  
 
 <img src="images/point_scaling.png">  
 
