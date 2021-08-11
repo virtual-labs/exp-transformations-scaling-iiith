@@ -25,7 +25,7 @@
       "source": "pretest.json",
       "label": "Pretest",
       "unit-type": "task",
-      "content-type": "assessment"
+      "content-type": "assesment"
     },
     {
       "target": "simulation.html",
