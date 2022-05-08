@@ -1,0 +1,1 @@
+- To understand the effect of scaling on Points along any axis in 2D/3D space. We also learn the matrix representation for the scaling transformation and how to use it to compute the scaled point. 
