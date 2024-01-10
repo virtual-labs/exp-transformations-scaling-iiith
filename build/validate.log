@@ -1,0 +1,14 @@
+{
+  _: [],
+  f: [
+    '/home/danny-vader/Desktop/virtual-labs/2023-winter-intern/exp-transformations-scaling-iiith/experiment-descriptor.json'
+  ],
+  files: [
+    '/home/danny-vader/Desktop/virtual-labs/2023-winter-intern/exp-transformations-scaling-iiith/experiment-descriptor.json'
+  ],
+  '$0': 'validate'
+}
+Json Error: There are additional properties
+Json Error: must match "then" schema
+Failed while validating /home/danny-vader/Desktop/virtual-labs/2023-winter-intern/exp-transformations-scaling-iiith/experiment-descriptor.json
+Error: Schema is Invalid

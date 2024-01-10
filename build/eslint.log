@@ -1,0 +1,20 @@
+
+/home/danny-vader/Desktop/virtual-labs/2023-winter-intern/exp-transformations-scaling-iiith/experiment/simulation/js/shapes.js
+  24:15  warning  'geometry' is assigned a value but never used  no-unused-vars
+
+/home/danny-vader/Desktop/virtual-labs/2023-winter-intern/exp-transformations-scaling-iiith/experiment/simulation/main.js
+   10:7  warning  'modalbutton1' is assigned a value but never used  no-unused-vars
+  135:5  warning  'buttons' is assigned a value but never used       no-unused-vars
+  167:5  warning  'pIntersect' is assigned a value but never used    no-unused-vars
+  170:5  warning  'dragObject' is assigned a value but never used    no-unused-vars
+  175:5  warning  'noOfShapes' is assigned a value but never used    no-unused-vars
+  266:7  warning  Unexpected lexical declaration in case block       no-case-declarations
+  267:7  warning  Unexpected lexical declaration in case block       no-case-declarations
+  268:7  warning  Unexpected lexical declaration in case block       no-case-declarations
+  276:7  warning  Unexpected lexical declaration in case block       no-case-declarations
+  429:9  warning  'gridHelper' is assigned a value but never used    no-unused-vars
+  430:9  warning  'count' is assigned a value but never used         no-unused-vars
+  448:7  warning  'tri_geo' is assigned a value but never used       no-unused-vars
+
+✖ 13 problems (0 errors, 13 warnings)
+
