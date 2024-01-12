@@ -1,0 +1,23 @@
+{
+  "name": "exp-transformations-scaling-iiith",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/virtual-labs/exp-transformations-scaling-iiith.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/virtual-labs/exp-transformations-scaling-iiith/issues"
+  },
+  "homepage": "https://github.com/virtual-labs/exp-transformations-scaling-iiith#readme",
+  "dependencies": {
+    "@virtual-labs/buildexp": "^1.0.5"
+  }
+}
