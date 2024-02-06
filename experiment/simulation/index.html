@@ -10,10 +10,11 @@
 </head>
 
 <body class="page" style="margin:1rem;">
-    <section class="columns is-centered is-flex column">
-        <div class="v-collapsible-instruction-container">
-            <div class="v-collapsible">Instructions</div>
-            <div id="procedure-message" class="v-content">
+   <div class="columns is-centered column">
+    <div class="v-collapsible-instruction-container v-instruction-container">
+      <div id="instruction-title" class="v-collapsible is-size-5">Instructions</div>
+      <div id="procedure-message" class="v-content" style="text-align: left; padding-left: 10%; padding-right: 10%;">
+        <ul style="list-style: disc;">
                 <li class="instr-font">
                     The initial coordinates of the given triangle can be set in the point-coordinates section.
                 </li>
@@ -53,11 +54,11 @@
                 <li class="instr-font">
                     Enabling the Lock Vertices option allows you to translate the whole simulation on left-clicking
                     and dragging the cursor.
-
                 </li>
+             </ul>
             </div>
         </div>
-    </section>
+    </div>
 
     <main class="columns is-centered is-variable is-1-mobile is-flex is-flex-wrap-wrap workspace">
         <aside id="left" class="column is-2-desktop is-5-tablet is-5-mobile apparatus">

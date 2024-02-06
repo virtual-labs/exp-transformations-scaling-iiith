@@ -1,2 +1,1 @@
-This experiment explains the concept of scaling transformation.    
-
+The aim of this experiment is to provide a comprehensive understanding of scaling transformations in computer graphics. Participants will explore the fundamental principles behind scaling, gaining hands-on experience with the application of scaling factors to transform objects. Through interactive simulations, this experiment aims to elucidate the impact of scaling on the size and dimensions of graphical elements, fostering a practical grasp of this essential transformation technique in computer graphics.

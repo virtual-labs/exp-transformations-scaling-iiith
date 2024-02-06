@@ -1,0 +1,90 @@
+{
+    "version": 2.0,
+    "questions": [
+      {
+        "question": "1. In scaling transformation, what happens when the scaling factor is greater than 1?",
+        "answers": {
+          "a": "Objects become smaller.",
+          "b": "Objects maintain their size.",
+          "c": "Objects become larger.",
+          "d": "Objects rotate."
+        },
+        "correctAnswer": "c",
+        "explanations": {
+          "a": "Incorrect. Objects become larger when the scaling factor is greater than 1.",
+          "b": "Incorrect. Objects actually change size.",
+          "c": "Correct! Objects become larger when the scaling factor is greater than 1.",
+          "d": "Incorrect. Rotation is a different transformation."
+        },
+        "difficulty": "beginner"
+      },
+      {
+        "question": "2. In 3D computer graphics, what additional factor needs to be considered for scaling?",
+        "answers": {
+          "a": "Time",
+          "b": "Brightness",
+          "c": "Depth",
+          "d": "Temperature"
+        },
+        "correctAnswer": "c",
+        "explanations": {
+          "a": "Incorrect. Time is not a factor in scaling.",
+          "b": "Incorrect. Brightness is not influenced by scaling.",
+          "c": "Correct! Scaling in 3D involves considerations of depth.",
+          "d": "Incorrect. Temperature is unrelated to scaling in 3D."
+        },
+        "difficulty": "intermediate"
+      },
+      {
+        "question": "3. What is the homogenous coordinate for scaling in 2D?",
+        "answers": {
+          "a": "(Sx, Sy)",
+          "b": "(Sx + 1, Sy + 1)",
+          "c": "(Sx - 1, Sy - 1)",
+          "d": "(1, 1)"
+        },
+        "correctAnswer": "d",
+        "explanations": {
+          "a": "Incorrect. Missing the homogeneous coordinate.",
+          "b": "Incorrect. Incorrect formula for homogeneous coordinates.",
+          "c": "Incorrect. Incorrect formula for homogeneous coordinates.",
+          "d": "Correct! The homogeneous coordinate is (1, 1) for scaling in 2D."
+        },
+        "difficulty": "intermediate"
+      },
+      {
+        "question": "4. How does negative scaling factor influence an object?",
+        "answers": {
+          "a": "It flips the object.",
+          "b": "It shrinks the object uniformly.",
+          "c": "It enlarges the object uniformly.",
+          "d": "It rotates the object."
+        },
+        "correctAnswer": "a",
+        "explanations": {
+          "a": "Correct! Negative scaling factors cause the object to flip.",
+          "b": "Incorrect. Negative scaling doesn't cause uniform shrinking.",
+          "c": "Incorrect. Negative scaling doesn't cause uniform enlargement.",
+          "d": "Incorrect. Rotation is not associated with negative scaling."
+        },
+        "difficulty": "advanced"
+      },
+      {
+        "question": "5. What is the significance of the fixed point in scaling transformations?",
+        "answers": {
+          "a": "It remains unaffected by scaling.",
+          "b": "It serves as the center of scaling.",
+          "c": "It determines the scaling factor.",
+          "d": "It controls the rotation in scaling."
+        },
+        "correctAnswer": "b",
+        "explanations": {
+          "a": "Incorrect. The fixed point is influenced by scaling.",
+          "b": "Correct! The fixed point is the center of scaling operations.",
+          "c": "Incorrect. The scaling factor is independent of the fixed point.",
+          "d": "Incorrect. Rotation is a separate transformation."
+        },
+        "difficulty": "advanced"
+      }
+    ]
+  }
