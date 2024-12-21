@@ -1,0 +1,17 @@
+
+/home/chirag/Desktop/ALL-VLABS-EXP-Deployable/exp-transformations-scaling-iiith/experiment/simulation/main.js
+   12:10  warning  'Triangle' is defined but never used                no-unused-vars
+   14:7   warning  'moveButton' is assigned a value but never used     no-unused-vars
+   15:7   warning  'modalbutton1' is assigned a value but never used   no-unused-vars
+   25:5   warning  'modalAdd' is assigned a value but never used       no-unused-vars
+   26:5   warning  'modalEdit' is assigned a value but never used      no-unused-vars
+   27:5   warning  'spanEditModal' is assigned a value but never used  no-unused-vars
+   54:3   warning  'lock' is assigned a value but never used           no-unused-vars
+   60:5   warning  'dotList' is assigned a value but never used        no-unused-vars
+   61:5   warning  'noOfShapes' is assigned a value but never used     no-unused-vars
+  407:5   warning  'buttons' is assigned a value but never used        no-unused-vars
+  689:9   warning  'gridHelper' is assigned a value but never used     no-unused-vars
+  690:9   warning  'count' is assigned a value but never used          no-unused-vars
+
+✖ 12 problems (0 errors, 12 warnings)
+
