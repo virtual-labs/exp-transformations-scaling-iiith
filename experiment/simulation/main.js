@@ -3,12 +3,7 @@ import * as THREE from "https://threejsfundamentals.org/threejs/resources/threej
 import { OrbitControls } from "https://threejsfundamentals.org/threejs/resources/threejs/r115/examples/jsm/controls/OrbitControls.js";
 import { MOUSE } from "https://unpkg.com/three@0.128.0/build/three.module.js";
 
-import {
-  createCube,
-  createDodecahedron,
-  createOctahedron,
-  createTetrahedron,
-} from "./js/shapes.js";
+import { createCube, createDodecahedron, createOctahedron, createTetrahedron } from "./js/shapes.js";
 import { Triangle } from "./js/Triangle.js";
 
 const moveButton = document.getElementById("move-button");
@@ -27,7 +22,7 @@ let modalEdit = document.getElementById("edit-modal");
 let spanEditModal = document.getElementsByClassName("close")[0];
 var slider = document.getElementById("slider");
 slider.addEventListener("input", movePoint);
-document.getElementById("slider").max = 1000;
+document.getElementById("slider").max =1000;
 document.getElementById("slider").min = 0;
 slider.step = 1;
 
@@ -35,9 +30,10 @@ let max_x_scale = document.getElementById("scale-x").value;
 let max_y_scale = document.getElementById("scale-y").value;
 let max_z_scale = document.getElementById("scale-z").value;
 
+
 let old_scale = [1, 1, 1];
 
-let noofframes = 1000;
+let noofframes =1000;
 let scene,
   PI = 3.141592653589793,
   camera,
@@ -55,13 +51,19 @@ let scene,
   dir = [],
   arrowHelper = [];
 
+
 let point = [];
 let shapeVertex = [];
 let dotList = [];
 let noOfShapes = 0;
 
 let trans_matrix = new THREE.Matrix4();
-trans_matrix.set(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+trans_matrix.set(
+  1, 0, 0, 0,
+  0, 1, 0, 0,
+  0, 0, 1, 0,
+  0, 0, 0, 1
+);
 
 let shapeCount = [0, 0, 0, 0];
 
@@ -78,6 +80,7 @@ window.onclick = function (event) {
     addModal.style.display = "none";
   }
 };
+
 
 lockVertices.addEventListener("click", updateMouseButtons);
 lockZoom.addEventListener("click", updateMouseButtons);
@@ -492,51 +495,59 @@ function handleShapeAddition() {
   addModal.style.display = "none";
 }
 
+
 function movePoint(e) {
   var target = e.target;
+  
+let scale = [
+  1 + (target.value / noofframes) * (max_x_scale - 1),
+  1 + (target.value / noofframes) * (max_y_scale - 1),
+  1 + (target.value / noofframes) * (max_z_scale - 1),
+];
 
-  let scale = [
-    1 + (target.value / noofframes) * (max_x_scale - 1),
-    1 + (target.value / noofframes) * (max_y_scale - 1),
-    1 + (target.value / noofframes) * (max_z_scale - 1),
-  ];
+let scale_m = new THREE.Matrix4();
+scale_m.makeScale(
+  scale[0] / old_scale[0],
+  scale[1] / old_scale[1],
+  scale[2] / old_scale[2]
+);
 
-  let scale_m = new THREE.Matrix4();
-  scale_m.makeScale(
-    scale[0] / old_scale[0],
-    scale[1] / old_scale[1],
-    scale[2] / old_scale[2]
-  );
+for (let i = 0; i < 3; i++) {
+  old_scale[i] = scale[i];
+}
 
-  for (let i = 0; i < 3; i++) {
-    old_scale[i] = scale[i];
+trans_matrix.multiply(scale_m);
+
+shapes.forEach((shape) => {
+  shape.geometry.applyMatrix4(scale_m);
+
+  // Update geometry attributes
+  if (shape.geometry.isBufferGeometry) {
+    shape.geometry.attributes.position.needsUpdate = true;
+    shape.geometry.computeBoundingBox(); // Only if bounding box is needed
+    shape.geometry.computeVertexNormals(); // Only if normals are affected
   }
 
-  trans_matrix.multiply(scale_m);
-
-  shapes.forEach((shape) => {
-    shape.geometry.applyMatrix4(scale_m);
-
-    // Update geometry attributes
-    if (shape.geometry.isBufferGeometry) {
-      shape.geometry.attributes.position.needsUpdate = true;
-      shape.geometry.computeBoundingBox(); // Only if bounding box is needed
-      shape.geometry.computeVertexNormals(); // Only if normals are affected
-    }
-
-    // Update edges
-    shape.traverse((child) => {
-      if (child.isLineSegments) {
-        child.geometry.applyMatrix4(scale_m);
-        if (child.geometry.isBufferGeometry) {
-          child.geometry.attributes.position.needsUpdate = true;
-        }
+  // Update edges
+  shape.traverse((child) => {
+    if (child.isLineSegments) {
+      child.geometry.applyMatrix4(scale_m);
+      if (child.geometry.isBufferGeometry) {
+        child.geometry.attributes.position.needsUpdate = true;
       }
-    });
+    }
   });
+});
+
+
 
   if (target.value <= 0) {
-    trans_matrix.set(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+    trans_matrix.set(
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1
+    );
   }
   if (parseFloat(e.target.value) === parseFloat(e.target.max)) {
     trans_matrix.set(
@@ -559,6 +570,7 @@ function movePoint(e) {
     );
   }
 
+
   document.getElementById("matrix-00").value = trans_matrix.elements[0];
   document.getElementById("matrix-01").value = trans_matrix.elements[1];
   document.getElementById("matrix-02").value = trans_matrix.elements[2];
@@ -579,6 +591,7 @@ function movePoint(e) {
   document.getElementById("matrix-32").value = trans_matrix.elements[14];
   document.getElementById("matrix-33").value = trans_matrix.elements[15];
 }
+
 
 // document.getElementById("noofframes").onchange = function () {
 //   let new_value = document.getElementById("noofframes").value;
@@ -655,6 +668,47 @@ document.getElementById("scale-z").onchange = function () {
   max_z_scale = new_scale;
 };
 
+// Select elements
+// Select elements
+const toggleInstructions = document.getElementById("toggle-instructions");
+const procedureMessage = document.getElementById("procedure-message");
+
+// Function to show the instructions overlay
+const showInstructions = () => {
+  procedureMessage.style.display = "block";
+};
+
+// Function to hide the instructions overlay
+const hideInstructions = (event) => {
+  // Close if click is outside the overlay or if it's the toggle button again
+  if (
+    !procedureMessage.contains(event.target) &&
+    event.target !== toggleInstructions
+  ) {
+    procedureMessage.style.display = "none";
+  }
+};
+
+// Attach event listeners
+toggleInstructions.addEventListener("click", (event) => {
+  // Toggle the visibility of the overlay
+  if (procedureMessage.style.display === "block") {
+    procedureMessage.style.display = "none";
+  } else {
+    showInstructions();
+  }
+  event.stopPropagation(); // Prevent immediate closure after clicking the button
+});
+
+document.addEventListener("click", hideInstructions);
+
+// Prevent closing the overlay when clicking inside it
+procedureMessage.addEventListener("click", (event) => {
+  event.stopPropagation(); // Prevent the click inside from closing the overlay
+});
+
+
+
 // // Function to reset slider to 0 and shape to original size
 // function resetSliderAndShape() {
 //   const slider = document.getElementById("slider"); // Get the slider element
@@ -671,16 +725,36 @@ document.getElementById("scale-z").onchange = function () {
 // document.getElementById("scale-y").addEventListener("input", resetSliderAndShape);
 // document.getElementById("scale-z").addEventListener("input", resetSliderAndShape);
 
+function createLabel(text, direction, length) {
+  const fontLoader = new THREE.FontLoader();
+  let labelMesh;
+
+  fontLoader.load(
+    "https://threejs.org/examples/fonts/helvetiker_regular.typeface.json",
+    function (font) {
+      const geometry = new THREE.TextGeometry(text, {
+        font: font,
+        size: 0.6,
+        height: 0.1,
+      });
+      const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+      labelMesh = new THREE.Mesh(geometry, material);
+
+      // Position the label at the end of the arrow (tip of the arrow)
+      const labelPosition = direction.clone().multiplyScalar(length);
+      labelMesh.position.copy(labelPosition);
+      scene.add(labelMesh);
+    }
+  );
+
+  return labelMesh;
+}
+
 scene = new THREE.Scene();
 scene.background = new THREE.Color(0x333333);
-camera = new THREE.PerspectiveCamera(
-  30,
-  window.innerWidth / window.innerHeight,
-  1,
-  1000
-);
+camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 1000);
 let init = function () {
-  camera.position.set(20, 20, 20); // Set camera position behind and above the origin
+  camera.position.set(25, 25, 25); // Set camera position behind and above the origin
 
   camera.lookAt(10, 10, 5);
   const light = new THREE.DirectionalLight(0xffffff, 3);
@@ -688,22 +762,40 @@ let init = function () {
   scene.add(light);
   const gridHelper = new THREE.GridHelper(size, divisions);
   const count = 1;
-  dir[0] = new THREE.Vector3(1, 0, 0);
-  dir[1] = new THREE.Vector3(0, 1, 0);
-  dir[2] = new THREE.Vector3(0, 0, 1);
-  dir[3] = new THREE.Vector3(-1, 0, 0);
-  dir[4] = new THREE.Vector3(0, -1, 0);
-  dir[5] = new THREE.Vector3(0, 0, -1);
+  
+  const arrowHelper = [];
+  const dir = [
+    new THREE.Vector3(1, 0, 0), // +X
+    new THREE.Vector3(0, 1, 0), // +Y
+    new THREE.Vector3(0, 0, 1), // +Z
+    new THREE.Vector3(-1, 0, 0), // -X
+    new THREE.Vector3(0, -1, 0), // -Y
+    new THREE.Vector3(0, 0, -1), // -Z
+  ];
+
+  const labels = ["+X", "+Y", "+Z", "-X", "-Y", "-Z"]; // Labels for each axis
   const origin = new THREE.Vector3(0, 0, 0);
   const length = 10;
-  arrowHelper[0] = new THREE.ArrowHelper(dir[0], origin, length, "red");
-  arrowHelper[1] = new THREE.ArrowHelper(dir[1], origin, length, "yellow");
-  arrowHelper[2] = new THREE.ArrowHelper(dir[2], origin, length, "blue");
-  arrowHelper[3] = new THREE.ArrowHelper(dir[3], origin, length, "red");
-  arrowHelper[4] = new THREE.ArrowHelper(dir[4], origin, length, "yellow");
-  arrowHelper[5] = new THREE.ArrowHelper(dir[5], origin, length, "blue");
+
+  // Loop through the axes
   for (let i = 0; i < 6; i++) {
+    // Determine color based on the direction
+    let color;
+    if (i === 0 || i === 3) {
+      color = "red"; // +X and -X axes
+    } else if (i === 1 || i === 4) {
+      color = "yellow"; // +Y and -Y axes
+    } else {
+      color = "blue"; // +Z and -Z axes
+    }
+
+    // Create the arrow helper for the current direction and color
+    arrowHelper[i] = new THREE.ArrowHelper(dir[i], origin, length, color);
     scene.add(arrowHelper[i]);
+
+    // Create label for each axis and position it at the tip of the arrow
+    const label = createLabel(labels[i], dir[i], length);
+    scene.add(label);
   }
 
   createCube(
@@ -741,20 +833,20 @@ let init = function () {
   renderer = new THREE.WebGLRenderer();
   let w = container.offsetWidth;
   let h = container.offsetHeight;
-  renderer.setSize(w, 0.85 * h);
+  renderer.setSize(w, 0.85*h);
   container.appendChild(renderer.domElement);
   orbit = new OrbitControls(camera, renderer.domElement);
-  orbit.mouseButtons = {
-    LEFT: MOUSE.PAN,
-    MIDDLE: MOUSE.DOLLY,
-    RIGHT: MOUSE.ROTATE,
-  };
-  orbit.target.set(0, 0, 0);
-  orbit.enableDamping = true;
+   orbit.mouseButtons = {
+     LEFT: MOUSE.PAN,
+     MIDDLE: MOUSE.DOLLY,
+     RIGHT: MOUSE.ROTATE,
+   };
+   orbit.target.set(0, 0, 0);
+   orbit.enableDamping = true;
 };
 let mainLoop = function () {
-  orbit.update(); // Important for damping
-  camera.updateMatrixWorld();
+   orbit.update(); // Important for damping
+   camera.updateMatrixWorld();
   renderer.render(scene, camera);
   requestAnimationFrame(mainLoop);
 };
