@@ -11,23 +11,19 @@
 
 <body class="page" style="margin:1rem;">
     <section class="columns is-centered is-flex column">
-        <div id="axis-labels"
-            style="position: absolute; top: 100px; right: 10px; padding: 10px; border-radius: 5px; color: white;">
-            <div><span style="color: rgb(236, 236, 240);">Axis-labels:</span></div>
-            <div><span style="color: red;">X-axis</span></div>
-            <div><span style="color: yellow;">Y-axis</span></div>
-            <div><span style="color: blue;">Z-axis</span></div>
-        </div>
+        
+        <!-- Instruction Toggle Button -->
         <div class="v-collapsible-instruction-container">
             <div class="v-collapsible" id="toggle-instructions"
                 style="cursor: pointer; background: #f1f1f1; padding: 10px; border-radius: 5px;">
                 <strong>Instructions</strong>
             </div>
-            <div id="procedure-message" class="v-content"
-                style="display: none; background: #f9f9f9; padding: 15px 15px 15px 30px; border-radius: 5px;">
+        </div>
+        
+        <!-- Fullscreen Instructions Modal -->
+        <div id="procedure-message" class="v-content">
                 <ol>
-                    <li class="instr-font">
-                        <strong style="font-size: 19px;">🖱️Mouse Controls</strong>:
+                    <li class="instr-font">         <strong style="font-size: 19px;">🖱️Mouse Controls</strong>:
                         <ul style="list-style-type: disc;padding-left: 20px;">
                             <li><strong>Left Mouse</strong>: Used for translating (shifting) the entire simulation by
                                 left-clicking and dragging
@@ -55,7 +51,7 @@
                         </ul>
                     </li>
                     <li class="instr-font">
-                        <strong style="font-size: 19px;">Shape Controls</strong>:
+                        <strong style="font-size: 19px;">➕Shape Controls</strong>:
                         <ul style="list-style-type: disc;padding-left: 20px;">
                             <li>Click the <strong style="color: #3298dc;font-size: 18px;">Add</strong> button to open a
                                 modal
@@ -88,19 +84,17 @@
                     </li>
 
                     <li class="instr-font">
-                        <strong style="font-size: 19px;">Scaling Controls</strong>:
+                        <strong style="font-size: 19px;">📏Scaling Controls</strong>:
                         <ul style="list-style-type: disc; padding-left: 20px;">
                             <li>
-                                <strong>Set Scaling Factors:</strong> Adjust the scaling factors for <strong>X</strong>,
-                                <strong>Y</strong>,
+                                <strong>Set Scaling Factors:</strong> Adjust the scaling factors for <strong>X</strong>, <strong>Y</strong>,
                                 and <strong>Z</strong> axes using the input fields below.
                             </li>
                             <ul style="list-style-type: disc;padding-left: 20px;">
-                                <li>
-                                    <p><strong>Note:</strong> Make sure the slider is at zero before making any changes
-                                        to scaling for accurate adjustments.
-                                    </p>
-                                </li>
+                            <li>
+                                <p><strong>Note:</strong> Make sure the slider is at zero before making any changes to scaling for accurate adjustments.
+                                </p>
+                            </li>
                             </ul>
                             <li>
                                 <strong>Dynamic Adjustment:</strong> Changes apply instantly as you modify the values.
@@ -111,7 +105,7 @@
 
 
                     <li class="instr-font">
-                        <strong style="font-size: 19px;">Grid Options</strong>: Check the corresponding checkboxes to
+                        <strong style="font-size: 19px;">📊Grid Options</strong>: Check the corresponding checkboxes to
                         display
                         the
                         <strong>XY-grid</strong>, <strong>YZ-grid</strong>, and <strong>XZ-grid</strong>, and uncheck
@@ -120,8 +114,7 @@
                     </li>
 
                     <li class="instr-font">
-                        <strong style="font-size: 19px;">Slider Control</strong>: Use the slider to dynamically adjust
-                        the scaling factors
+                        <strong style="font-size: 19px;">🎚️Slider Control</strong>: Use the slider to dynamically adjust the scaling factors
                         for <strong>X</strong>, <strong>Y</strong>, and <strong>Z</strong> axes simultaneously.
                     </li>
 
@@ -130,28 +123,6 @@
             </div>
         </div>
 
-
-
-        <script>
-            // Select relevant elements
-            const toggleInstructions = document.getElementById("toggle-instructions");
-            const procedureMessage = document.getElementById("procedure-message");
-            const axisLabels = document.getElementById("axis-labels");
-            const sliderContainer = document.querySelector(".slider-container"); // Target slider container
-
-            // Add click event to toggle instructions and adjust axis-labels and slider position
-            toggleInstructions.addEventListener("click", () => {
-                // Determine visibility of instructions using computed style
-                const isVisible = window.getComputedStyle(procedureMessage).display === "block";
-                procedureMessage.style.display = isVisible ? "none" : "block";
-
-                // Adjust the axis-labels top position
-                axisLabels.style.top = isVisible ? "100px" : "650px"; // Adjust based on desired shift
-
-                // Adjust the slider container position
-                // sliderContainer.style.top = isVisible ? "875px" : "50px"; // Adjust based on desired shift
-            });
-        </script>
     </section>
 
     <main class="columns is-centered is-variable is-1-mobile is-flex is-flex-wrap-wrap workspace">
@@ -307,58 +278,62 @@
 
             </div>
             <div class="slider-container"></div>
-            <input class="v-slider-full is-centered column exptwoslider centered-slider" id="slider" value="0" step="1"
-                type="range">
-        </div>
+                <input class="v-slider-full is-centered column exptwoslider centered-slider" id="slider" value="0" step="1"
+                    type="range">
+            </div>
         </div>
 
         <div id="observations" class="column has-text-centered is-2-desktop is-5-tablet is-5-mobile right">
             <div class="v-datalist-container">
 
-                <div class="v-datalist-row">
-                    <div class="v-datalist-title">Transformation Matrix</div>
-
-                    <div style="display: flexbox;">
-                        <input class="input is-responsive is-small" style="width:20%" type="number" id="matrix-00"
-                            value="1" readonly placeholder="X">
-                        <input class="input is-responsive is-small" style="width:20%" type="number" id="matrix-01"
-                            value="0" readonly placeholder="X">
-                        <input class="input is-responsive is-small" style="width:20%" type="number" id="matrix-02"
-                            value="0" readonly placeholder="X">
-                        <input class="input is-responsive is-small" style="width:20%" type="number" id="matrix-03"
-                            value="0" readonly placeholder="X">
+            <div class="v-datalist-row">
+                <div class="v-datalist-title">Transformation Matrix</div>
+            
+                <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                    <div style="display: flex; gap: 5px; width: 100%;">
+                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-00" value="1" readonly
+                            placeholder="X">
+                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-01" value="0" readonly
+                            placeholder="X">
+                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-02" value="0" readonly
+                            placeholder="X">
+                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-03" value="0" readonly
+                            placeholder="X">
                     </div>
-                    <div style="display: flexbox;">
-                        <input class="input is-responsive is-small" style="width:20%" type="number" id="matrix-10"
-                            value="0" readonly placeholder="X">
-                        <input class="input is-responsive is-small" style="width:20%" type="number" id="matrix-11"
-                            value="1" readonly placeholder="X">
-                        <input class="input is-responsive is-small" style="width:20%" type="number" id="matrix-12"
-                            value="0" readonly placeholder="X">
-                        <input class="input is-responsive is-small" style="width:20%" type="number" id="matrix-13"
-                            value="0" readonly placeholder="X">
+                    <div style="display: flex; gap: 5px; width: 100%;">
+                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-10" value="0" readonly
+                            placeholder="X">
+                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-11" value="1" readonly
+                            placeholder="X">
+                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-12" value="0" readonly
+                            placeholder="X">
+                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-13" value="0" readonly
+                            placeholder="X">
                     </div>
-                    <div style="display: flexbox;">
-                        <input class="input is-responsive is-small" style="width:20%" type="number" id="matrix-20"
-                            value="0" readonly placeholder="X">
-                        <input class="input is-responsive is-small" style="width:20%" type="number" id="matrix-21"
-                            value="0" readonly placeholder="X">
-                        <input class="input is-responsive is-small" style="width:20%" type="number" id="matrix-22"
-                            value="1" readonly placeholder="X">
-                        <input class="input is-responsive is-small" style="width:20%" type="number" id="matrix-23"
-                            value="0" readonly placeholder="X">
+                    <div style="display: flex; gap: 5px; width: 100%;">
+                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-20" value="0" readonly
+                            placeholder="X">
+                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-21" value="0" readonly
+                            placeholder="X">
+                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-22" value="1" readonly
+                            placeholder="X">
+                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-23" value="0" readonly
+                            placeholder="X">
                     </div>
-                    <div style="display: flexbox;">
-                        <input class="input is-responsive is-small" style="width:20%" type="number" id="matrix-30"
-                            value="0" readonly placeholder="X">
-                        <input class="input is-responsive is-small" style="width:20%" type="number" id="matrix-31"
-                            value="0" readonly placeholder="X">
-                        <input class="input is-responsive is-small" style="width:20%" type="number" id="matrix-32"
-                            value="0" readonly placeholder="X">
-                        <input class="input is-responsive is-small" style="width:20%" type="number" id="matrix-33"
-                            value="1" readonly placeholder="X">
+                    <div style="display: flex; gap: 5px; width: 100%;">
+                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-30" value="0" readonly
+                            placeholder="X">
+                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-31" value="0" readonly
+                            placeholder="X">
+                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-32" value="0" readonly
+                            placeholder="X">
+                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-33" value="1" readonly
+                            placeholder="X">
                     </div>
                 </div>
+            </div>
+
+
                 <div class="v-datalist-row" id="top-border" style="padding-top: 30px;">
                     <div class="v-datalist-title">Scaling Controls</div>
 
