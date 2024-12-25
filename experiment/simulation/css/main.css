@@ -102,6 +102,26 @@
     }
 }
 
+/* Extra styles for desktop */
+/* Extra styles for desktop */
+@media (min-width: 1024px) {
+  #left.apparatus {
+    width: 18vw; /* Adjusting width using viewport width */
+    height: 90vh; /* Adjusting height using viewport height */
+    border-radius: 16px; /* Rounded corners for a modern look */
+    overflow-y: auto; /* Scrollbar for overflow content */
+    /* Any additional styles can be added here */
+  }
+ #observations.right {
+    width: 18vw; /* Adjusting width using viewport width */
+    height: 90vh; /* Adjusting height using viewport height */
+    border-radius: 16px; /* Rounded corners for a modern look */
+    overflow-y: auto; /* Scrollbar for overflow content */
+    /* Any additional styles can be added here */
+  }
+}
+
+
 .main-content {
     display: flex;
     flex-direction: column;
@@ -287,7 +307,7 @@
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 100%;
-  height: 50vh; /* Set a fixed height, adjust as needed */
+  height: 60vh; /* Set a fixed height, adjust as needed */
   overflow-x: auto; /* Allows horizontal scrolling if the list overflows */
 }
 
@@ -430,7 +450,7 @@
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); /* Deeper shadow for more depth */
     border-radius: 16px; /* Rounded corners for a smoother look */
     text-align: left;
-    top: 43%; /* Center vertically */
+    top: 48%; /* Center vertically */
     left: 50%; /* Center horizontally */
     transform: translate(-50%, -50%);
     animation: fadeIn 0.5s ease-out; /* Fade-in animation */
@@ -454,3 +474,9 @@
 }
 
 
+
+
+#observations.column.has-text-centered {
+
+  overflow-y: auto; /* Enable scrollbar if content overflows */
+}
