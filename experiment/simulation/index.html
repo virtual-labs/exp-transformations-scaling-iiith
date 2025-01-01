@@ -11,7 +11,7 @@
 
 <body class="page" style="margin:1rem;">
     <section class="columns is-centered is-flex column">
-        
+
         <!-- Instruction Toggle Button -->
         <div class="v-collapsible-instruction-container">
             <div class="v-collapsible" id="toggle-instructions"
@@ -19,108 +19,145 @@
                 <strong>Instructions</strong>
             </div>
         </div>
-        
+
         <!-- Fullscreen Instructions Modal -->
         <div id="procedure-message" class="v-content">
-                <ol>
-                    <li class="instr-font">         <strong style="font-size: 19px;">🖱️Mouse Controls</strong>:
-                        <ul style="list-style-type: disc;padding-left: 20px;">
-                            <li><strong>Left Mouse</strong>: Used for translating (shifting) the entire simulation by
-                                left-clicking and dragging
-                                the cursor.</li>
-                            <li><strong>Right Mouse</strong>: Used for rotating the simulation by right-clicking and
-                                dragging
-                                the cursor.</li>
-                            <li><strong>Middle Mouse</strong>: Used for zooming in and out of the simulation by
-                                scrolling.</li>
-                        </ul>
+            <ol>
+                <li class="instr-font"> <strong style="font-size: 19px;">🖱️Mouse Controls</strong>:
+                    <ul style="list-style-type: disc;padding-left: 20px;">
+                        <li><strong>Left Click</strong>: Translate (shift) the simulation by left-clicking and dragging
+                            the cursor.</li>
+                        <li><strong>Right Click</strong>: Rotate the simulation by right-clicking and dragging the
+                            cursor.</li>
+                        <li><strong>Scroll Wheel</strong>: Zoom in and out of the simulation by scrolling.</li>
+                    </ul>
 
-                    </li>
-                    <li class="instr-font">
-                        <strong style="font-size: 19px;">🔒Lock Options</strong>:
-                        <ul style="list-style-type: disc;padding-left: 20px;">
-                            <li><strong>Lock Graph</strong>: Disables the translation (shifting) of the simulation when
-                                enabled.
-                            </li>
-                            <li><strong>Lock Zoom</strong>: Prevents zooming functionality when enabled, disabling the
-                                middle
-                                mouse button.</li>
-                            <li><strong>Lock Rotate</strong>: Disables the rotation of the simulation when enabled,
-                                disabling
-                                the right mouse button.</li>
-                        </ul>
-                    </li>
-                    <li class="instr-font">
-                        <strong style="font-size: 19px;">➕Shape Controls</strong>:
-                        <ul style="list-style-type: disc;padding-left: 20px;">
-                            <li>Click the <strong style="color: #3298dc;font-size: 18px;">Add</strong> button to open a
-                                modal
-                                where you can select a shape type and
-                                specify the coordinates for positioning.
-                                <ul style="list-style-type: disc;padding-left: 20px;">
-                                    <li>
-                                        <strong>Note</strong>:⚠️ Do not create any two shapes with the same coordinates.
-                                    </li>
+                </li>
 
-                                </ul>
-                            </li>
-                            <li>Click the <strong style="color: #970473;font-size: 18px;">Select</strong> button to
-                                choose a
-                                shape, which will highlight it with a
-                                spherical outline in the scene for easy identification.</li>
-                            <ul style="list-style-type: disc;padding-left: 20px;">
+                <li class="instr-font">
+                    <strong style="font-size: 19px;">📱Mobile Touch Controls</strong>:
+                    <ul style="list-style-type: disc; padding-left: 20px;">
+                        <li><strong>Pan (Translate)</strong>: Use two fingers on the screen to move the simulation.</li>
+                        <li><strong>Rotate</strong>: Drag finger on the screen to change the orientation of the
+                            simulation.</li>
+                        <li><strong>Zoom</strong>: Pinch two fingers together or spread them apart on the screen to zoom
+                            in or out of the
+                            simulation.</li>
+                    </ul>
 
-                                <li>After selecting, click the <strong
-                                        style="color: #48c774; font-size: 18px;">Edit</strong>
-                                    button to modify the
-                                    shape's properties or position.</li>
-                                <li> After selecting, click the <strong
-                                        style="color: #f14668;font-size: 18px;">Delete</strong>
-                                    button to remove the shape
-                                    from the scene.</li>
+                </li>
 
+                <li class="instr-font">
+                    <strong style="font-size: 19px;">🔒Lock Options</strong>:
+                    <ul style="list-style-type: disc;padding-left: 20px;">
+                        <li><strong>Lock Graph</strong>: Prevents translation (shifting) of the simulation when enabled.
+                        </li>
+                        <li><strong>Lock Zoom</strong>: Disables zoom functionality, effectively disabling the middle
+                            mouse button.</li>
+                        <li><strong>Lock Rotate</strong>: Disables the rotation of the simulation, disabling the right
+                            mouse button.</li>
+                    </ul>
+                </li>
+                <li class="instr-font">
+                    <strong style="font-size: 19px;">➕ Shape Controls</strong>:
+                    <ul style="list-style-type: disc; padding-left: 20px;">
+                        <li><strong>Add Shape:</strong> Click the Add button to open a modal where you can select a
+                            shape type and
+                            specify its coordinates.
+                            <ul style="list-style-type: disc; padding-left: 20px;">
+                                <li><strong>⚠️ Note:</strong> Avoid creating two shapes with the same coordinates.</li>
                             </ul>
-                        </ul>
-                    </li>
-
-                    <li class="instr-font">
-                        <strong style="font-size: 19px;">📏Scaling Controls</strong>:
-                        <ul style="list-style-type: disc; padding-left: 20px;">
-                            <li>
-                                <strong>Set Scaling Factors:</strong> Adjust the scaling factors for <strong>X</strong>, <strong>Y</strong>,
-                                and <strong>Z</strong> axes using the input fields below.
-                            </li>
-                            <ul style="list-style-type: disc;padding-left: 20px;">
-                            <li>
-                                <p><strong>Note:</strong> Make sure the slider is at zero before making any changes to scaling for accurate adjustments.
-                                </p>
-                            </li>
+                        </li>
+                        <li><strong>Select Shape:</strong> Click the <strong
+                                style="color: #970473;font-size: 18px;">Select</strong>
+                            button to highlight a shape with
+                            a spherical outline for
+                            easy identification.
+                            <ul style="list-style-type: disc; padding-left: 20px;">
+                                <li>
+                                    <strong>⛔ Note:</strong> Please ensure that the shapes are in their initial
+                                    positions before using the <strong
+                                        style="color: #970473;font-size: 18px;">Select</strong>
+                                    button.
+                                </li>
                             </ul>
-                            <li>
-                                <strong>Dynamic Adjustment:</strong> Changes apply instantly as you modify the values.
-                            </li>
-                        </ul>
-                    </li>
+                        </li>
+                        <li><strong>Edit Shape:</strong> After selecting a shape, click the <strong
+                                style="color: #48c774; font-size: 18px;">Edit</strong> button to modify its properties
+                            or position.</li>
+                        <li><strong>Delete Shape:</strong> After selecting a shape, click the <strong
+                                style="color: #f14668; font-size: 18px;">Delete</strong> button to remove it from the
+                            scene.</li>
+                    </ul>
+                </li>
+
+                <li class="instr-font">
+                    <strong style="font-size: 19px;">📏Scaling Controls</strong>:
+                    <ul style="list-style-type: disc; padding-left: 20px;">
+                        <li>
+                            <strong>Set Scaling Factors:</strong> Adjust the scaling factors for <strong>X</strong>,
+                            <strong>Y</strong>,
+                            and <strong>Z</strong> axes using the input fields below.
+                        </li>
+                        <li>
+                            <strong style="color:#1976D2">Apply Scaling:</strong> Click to apply the specified scaling
+                            factors to the current shapes.
+
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="instr-font">
+                    <strong style="font-size: 19px;">🔍Transformation Matrix:</strong>
+                    Matrix whose diagonal elements
+                    represent scaling factors for X, Y, and Z axes, while non-diagonal elements are zero, used to resize
+                    geometric
+                    shapes proportionally.
+                </li>
+
+
+                <li class="instr-font">
+                    <strong style="font-size: 19px;">📊 Grid Options</strong>:
+                    <ul style="list-style-type: disc; padding-left: 20px;">
+                        <li>Use the checkboxes to toggle the display of the XY-grid, YZ-grid, and XZ-grid.</li>
+                        <li>Check a box to display the corresponding grid, or uncheck it to remove it from view.</li>
+                    </ul>
+                </li>
+
+
+                <li class="instr-font">
+                    <strong style="font-size: 19px;">🎚️Slider Control</strong>: Adjust scaling
+                    along the X, Y, and Z axes using the slider.
+
+                </li>
+
+                <li class="instr-font">
+                    <strong style="font-size: 19px;color: #016b2d;">↺ Reset All</strong>: Click the "Reset All" button
+                    to revert all controls
+                    and settings to their default values.
+                </li>
 
 
 
-                    <li class="instr-font">
-                        <strong style="font-size: 19px;">📊Grid Options</strong>: Check the corresponding checkboxes to
-                        display
-                        the
-                        <strong>XY-grid</strong>, <strong>YZ-grid</strong>, and <strong>XZ-grid</strong>, and uncheck
-                        them to
-                        remove them from view.
-                    </li>
+                <li class="instr-font">
+                    <p>
+                        <strong style="color: #d42811; font-size: 20px;">NOTE:</strong> Make sure the slider is at zero
+                        before making any changes to
+                        for accurate adjustments.
+                    </p>
+                </li>
 
-                    <li class="instr-font">
-                        <strong style="font-size: 19px;">🎚️Slider Control</strong>: Use the slider to dynamically adjust the scaling factors
-                        for <strong>X</strong>, <strong>Y</strong>, and <strong>Z</strong> axes simultaneously.
-                    </li>
+                <div style="background-color: #f0f0f0; padding: 5px; margin: 10px 0;">
+                    <p style="font-style: italic; text-align: center; margin: 0;">
+                        Note: This experiment simulation is optimized for desktop screens. While basic functionality is
+                        available on
+                        mobile devices, for the best experience, use a desktop or PC monitor.
+                    </p>
+                </div>
 
 
-                </ol>
-            </div>
+            </ol>
+        </div>
         </div>
 
     </section>
@@ -278,60 +315,60 @@
 
             </div>
             <div class="slider-container"></div>
-                <input class="v-slider-full is-centered column exptwoslider centered-slider" id="slider" value="0" step="1"
-                    type="range">
-            </div>
+            <input class="v-slider-full is-centered column exptwoslider centered-slider" id="slider" value="0" step="1"
+                type="range">
+        </div>
         </div>
 
         <div id="observations" class="column has-text-centered is-2-desktop is-5-tablet is-5-mobile right">
             <div class="v-datalist-container">
 
-            <div class="v-datalist-row">
-                <div class="v-datalist-title">Transformation Matrix</div>
-            
-                <div style="display: flex; gap: 5px; flex-wrap: wrap;">
-                    <div style="display: flex; gap: 5px; width: 100%;">
-                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-00" value="1" readonly
-                            placeholder="X">
-                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-01" value="0" readonly
-                            placeholder="X">
-                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-02" value="0" readonly
-                            placeholder="X">
-                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-03" value="0" readonly
-                            placeholder="X">
-                    </div>
-                    <div style="display: flex; gap: 5px; width: 100%;">
-                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-10" value="0" readonly
-                            placeholder="X">
-                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-11" value="1" readonly
-                            placeholder="X">
-                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-12" value="0" readonly
-                            placeholder="X">
-                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-13" value="0" readonly
-                            placeholder="X">
-                    </div>
-                    <div style="display: flex; gap: 5px; width: 100%;">
-                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-20" value="0" readonly
-                            placeholder="X">
-                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-21" value="0" readonly
-                            placeholder="X">
-                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-22" value="1" readonly
-                            placeholder="X">
-                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-23" value="0" readonly
-                            placeholder="X">
-                    </div>
-                    <div style="display: flex; gap: 5px; width: 100%;">
-                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-30" value="0" readonly
-                            placeholder="X">
-                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-31" value="0" readonly
-                            placeholder="X">
-                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-32" value="0" readonly
-                            placeholder="X">
-                        <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-33" value="1" readonly
-                            placeholder="X">
+                <div class="v-datalist-row">
+                    <div class="v-datalist-title">Transformation Matrix</div>
+
+                    <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                        <div style="display: flex; gap: 5px; width: 100%;">
+                            <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-00"
+                                value="1" readonly placeholder="X">
+                            <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-01"
+                                value="0" readonly placeholder="X">
+                            <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-02"
+                                value="0" readonly placeholder="X">
+                            <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-03"
+                                value="0" readonly placeholder="X">
+                        </div>
+                        <div style="display: flex; gap: 5px; width: 100%;">
+                            <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-10"
+                                value="0" readonly placeholder="X">
+                            <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-11"
+                                value="1" readonly placeholder="X">
+                            <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-12"
+                                value="0" readonly placeholder="X">
+                            <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-13"
+                                value="0" readonly placeholder="X">
+                        </div>
+                        <div style="display: flex; gap: 5px; width: 100%;">
+                            <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-20"
+                                value="0" readonly placeholder="X">
+                            <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-21"
+                                value="0" readonly placeholder="X">
+                            <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-22"
+                                value="1" readonly placeholder="X">
+                            <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-23"
+                                value="0" readonly placeholder="X">
+                        </div>
+                        <div style="display: flex; gap: 5px; width: 100%;">
+                            <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-30"
+                                value="0" readonly placeholder="X">
+                            <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-31"
+                                value="0" readonly placeholder="X">
+                            <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-32"
+                                value="0" readonly placeholder="X">
+                            <input class="input is-responsive is-small" style="flex: 1;" type="number" id="matrix-33"
+                                value="1" readonly placeholder="X">
+                        </div>
                     </div>
                 </div>
-            </div>
 
 
                 <div class="v-datalist-row" id="top-border" style="padding-top: 30px;">
@@ -359,7 +396,17 @@
                             <input class="input is-responsive is-small fields" type="number" id="scale-z" name="scale-z"
                                 step=".01" value="2">
                         </div>
+                        <button type="submit" id="apply-scaling-btn" class="v-button is-responsive is-small">Apply
+                            Scaling</button>
+                            <button style="margin: 1%" class="v-button reset-btn is-responsive" id="reset_button" onclick="location.reload()">
+                                Reset All
+                            </button>
                     </form>
+
+                    <!-- <div id="top-border" style="padding-top: 30px;">
+                        
+                    </div> -->
+
                 </div>
             </div>
 

@@ -496,6 +496,26 @@ function handleShapeAddition() {
 }
 
 
+function applyScaling(event) {
+  event.preventDefault(); // Prevent the default form submission
+  max_x_scale = parseFloat(document.getElementById("scale-x").value);
+  max_y_scale = parseFloat(document.getElementById("scale-y").value);
+  max_z_scale = parseFloat(document.getElementById("scale-z").value);
+
+  // Your scaling logic here
+  console.log("Scaling applied:", max_x_scale, max_y_scale, max_z_scale);
+
+  // Optionally, you can remove the event listener after it's triggered once
+  // event.target.removeEventListener("submit", applyScaling);
+}
+
+
+
+// Add event listeners for Apply Scaling and Apply Translation buttons
+document
+  .getElementById("apply-scaling-btn")
+  .addEventListener("click", applyScaling);
+
 function movePoint(e) {
   var target = e.target;
   
@@ -628,45 +648,45 @@ shapes.forEach((shape) => {
 //   document.getElementById("slider").max = new_value;
 // };
 
-document.getElementById("scale-x").onchange = function () {
-  let new_scale = document.getElementById("scale-x").value;
-  if (old_scale[0] !== 1) {
-    let scale_m = new THREE.Matrix4();
-    scale_m.makeScale(new_scale / max_x_scale, 1, 1);
+// document.getElementById("scale-x").onchange = function () {
+//   let new_scale = document.getElementById("scale-x").value;
+//   if (old_scale[0] !== 1) {
+//     let scale_m = new THREE.Matrix4();
+//     scale_m.makeScale(new_scale / max_x_scale, 1, 1);
 
-    old_scale[0] *= new_scale / max_x_scale;
-    trans_matrix.multiply(scale_m);
-    document.getElementById("matrix-00").value = trans_matrix.elements[0];
-  }
+//     old_scale[0] *= new_scale / max_x_scale;
+//     trans_matrix.multiply(scale_m);
+//     document.getElementById("matrix-00").value = trans_matrix.elements[0];
+//   }
 
-  max_x_scale = new_scale;
-};
-document.getElementById("scale-y").onchange = function () {
-  let new_scale = document.getElementById("scale-y").value;
-  if (old_scale[1] !== 1) {
-    let scale_m = new THREE.Matrix4();
-    scale_m.makeScale(1, new_scale / max_y_scale, 1);
+//   max_x_scale = new_scale;
+// };
+// document.getElementById("scale-y").onchange = function () {
+//   let new_scale = document.getElementById("scale-y").value;
+//   if (old_scale[1] !== 1) {
+//     let scale_m = new THREE.Matrix4();
+//     scale_m.makeScale(1, new_scale / max_y_scale, 1);
 
-    old_scale[1] *= new_scale / max_y_scale;
-    trans_matrix.multiply(scale_m);
-    document.getElementById("matrix-11").value = trans_matrix.elements[5];
-  }
+//     old_scale[1] *= new_scale / max_y_scale;
+//     trans_matrix.multiply(scale_m);
+//     document.getElementById("matrix-11").value = trans_matrix.elements[5];
+//   }
 
-  max_y_scale = new_scale;
-};
-document.getElementById("scale-z").onchange = function () {
-  let new_scale = document.getElementById("scale-z").value;
-  if (old_scale[2] !== 1) {
-    let scale_m = new THREE.Matrix4();
-    scale_m.makeScale(1, 1, new_scale / max_z_scale);
+//   max_y_scale = new_scale;
+// };
+// document.getElementById("scale-z").onchange = function () {
+//   let new_scale = document.getElementById("scale-z").value;
+//   if (old_scale[2] !== 1) {
+//     let scale_m = new THREE.Matrix4();
+//     scale_m.makeScale(1, 1, new_scale / max_z_scale);
 
-    old_scale[2] *= new_scale / max_z_scale;
-    trans_matrix.multiply(scale_m);
-    document.getElementById("matrix-22").value = trans_matrix.elements[10];
-  }
+//     old_scale[2] *= new_scale / max_z_scale;
+//     trans_matrix.multiply(scale_m);
+//     document.getElementById("matrix-22").value = trans_matrix.elements[10];
+//   }
 
-  max_z_scale = new_scale;
-};
+//   max_z_scale = new_scale;
+// };
 
 // Select elements
 // Select elements

@@ -21,10 +21,10 @@
     {
       "question": "2. Which matrix represents a uniform scaling transformation in 2D?",
       "answers": {
-        "a": "[[s, 0], [0, s]]",
-        "b": "[[s, s], [s, s]]",
-        "c": "[[s, 0, 0], [0, s, 0], [0, 0, s]]",
-        "d": "[[1, 0], [0, 1]]"
+        "a": "<img src=\"images/op1.png\">",
+        "b": "<img src=\"images/op2.png\">",
+        "c": "<img src=\"images/op3.png\">",
+        "d": "<img src=\"images/op4.png\">"
       },
       "correctAnswer": "a",
       "explanations": {
@@ -36,12 +36,12 @@
       "difficulty": "beginner"
     },
     {
-      "question": "3. What is the formula for scaling a point (x, y) in 2D with scaling factors Sx and Sy?",
+      "question": "3. What is the formula for scaling a point (x, y) in 2D with scaling factors S<sub>x</sub> and S<sub>y</sub>?",
       "answers": {
-        "a": "(x * Sy, y * Sx)",
-        "b": "(x + Sx, y + Sy)",
-        "c": "(x / Sx, y / Sy)",
-        "d": "(x * Sx, y * Sy)"
+        "a": "(x * S<sub>y</sub>, y * S<sub>x</sub>)",
+        "b": "(x + S<sub>x</sub>, y + S<sub>y</sub>)",
+        "c": "(x / S<sub>x</sub>, y / S<sub>y</sub>)",
+        "d": "(x * S<sub>x</sub>, y * S<sub>y</sub>)"
       },
       "correctAnswer": "d",
       "explanations": {
