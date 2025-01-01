@@ -1,25 +1,20 @@
-1. **Introduction to Scaling Transformation:**
-   - This experiment serves as an introduction to the fundamental concept of scaling transformation in computer graphics.
-   - Scaling transformation involves adjusting the size of graphical objects, a crucial aspect in creating dynamic and visually appealing graphics.
+# Procedure
 
-2. **Interactive Point Scaling:**
-   - A point is chosen as the subject for scaling transformation in this experiment.
-   - Utilize the slider located at the bottom of the interface to observe the dynamic movement of the point as the scaling is applied.
-   - This interactive feature allows participants to visually grasp the impact of scaling on the position of the point.
+## Step 1: Understanding Controls and Features
+- Familiarize yourself with the mouse and touch controls listed under **Mouse Controls** and **Mobile Touch Controls**. Understand how left-click, right-click, scrolling, and touch gestures translate, rotate, and zoom the simulation.
+- Learn about locking options such as **Lock Graph**, **Lock Zoom**, and **Lock Rotate** to understand how they restrict specific functionalities in the simulation.
 
-3. **Node Representation of Transformation:**
-   - The experiment incorporates a visual representation of the scaling transformation through a tree structure.
-   - A node within the tree corresponds to the transformation applied to the point, providing insights into the scaling values along each axis.
-   - By manipulating the slider, participants can witness an animated transition between the initial and final positions of the point, enhancing their understanding of the transformation.
+## Step 2: Shape Manipulation
+- Explore the **Shape Controls** section. Practice adding, selecting, editing, and deleting shapes using the corresponding buttons (**Add**, **Edit**, **Delete**). Note the instructions regarding shape placement and the warnings about avoiding overlapping coordinates.
 
-4. **Matrix Representation (T):**
-   - The scaling matrix (T) responsible for the transformation is displayed prominently.
-   - Participants can actively engage with the experiment by editing the scale values along any axis.
-   - Observe how the scaling matrix dynamically adjusts in response to these modifications, reinforcing the relationship between matrix operations and scaling transformations.
+## Step 3: Scaling and Transformation
+- Study the **Scaling Controls** section. Adjust the scaling factors for the X, Y, and Z axes using the input fields provided. Use the **Apply Scaling** button to apply these factors to the shapes in the simulation.
+- Review the **Transformation Matrix** and understand its role in scaling shapes proportionally across different axes.
 
-5. **Understanding Coordinate System Modification:**
-   - An additional layer of comprehension is introduced by interpreting transformations as modifications to the coordinate system while preserving the point's original position.
-   - Explore this concept by checking the "Transform Coordinate Systems" checkbox located under the Display tab.
-   - This feature facilitates a comparison between the standard transformation and the modified coordinate system, providing a nuanced understanding of how transformations can be interpreted in different contexts.
+## Step 4: Grid Options and Visualization
+- Explore the **Grid Options** section to toggle the display of XY-grid, YZ-grid, and XZ-grid using checkboxes. Understand how these grids aid in visualizing spatial relationships within the simulation.
+- Experiment with the slider control to adjust scaling along the X, Y, and Z axes visually.
 
-By following these steps, participants will not only gain practical experience in applying scaling transformations but also develop a deeper understanding of the associated matrix operations and the nuances of interpreting transformations in different coordinate systems.
+## Step 5: Reset and Best Practices
+- Utilize the **Reset All** button located at the bottom of the scaling controls section to revert all controls and settings to their default values.
+- Follow the note about ensuring the slider is at zero before making adjustments for accurate scaling.

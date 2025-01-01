@@ -38,9 +38,9 @@
       {
         "question": "3. What is the homogenous coordinate for scaling in 2D?",
         "answers": {
-          "a": "(Sx, Sy)",
-          "b": "(Sx + 1, Sy + 1)",
-          "c": "(Sx - 1, Sy - 1)",
+          "a": "(S<sub>x</sub>, S<sub>y</sub>)",
+          "b": "(S<sub>x</sub> + 1, S<sub>y</sub> + 1)",
+          "c": "(S<sub>x</sub> - 1, S<sub>y</sub> - 1)",
           "d": "(1, 1)"
         },
         "correctAnswer": "d",

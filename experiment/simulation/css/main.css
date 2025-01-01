@@ -480,3 +480,23 @@
 
   overflow-y: auto; /* Enable scrollbar if content overflows */
 }
+
+#apply-scaling-btn {
+    background: linear-gradient(to right, #2196F3, #1976D2); /* Blue gradient */
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding */
+    border: none; /* Remove border */
+    cursor: pointer; /* Cursor style */
+    border-radius: 5px; /* Rounded corners */
+    text-align: center; /* Center text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Display as block */
+    font-size: 16px; /* Font size */
+    transition-duration: 0.4s; /* Smooth transition */
+}
+
+/* Hover effect */
+#apply-scaling-btn:hover {
+    background: linear-gradient(to right, #1976D2, #0D47A1); /* Darker blue gradient */
+    color: white; /* White text */
+}
