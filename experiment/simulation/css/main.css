@@ -76,29 +76,42 @@
 
 
 @media screen and (max-width: 800px) {
-     .v-canvas-container {
+    .v-canvas-container {
         width: 100%;
-        height: 650px; /* Set a minimum height for mobile */
-        /* min-height: 100px; */
+        height: 650px;
     }
     .slider-container {
         margin-top: -60px;
+        margin-bottom: 80px; /* Add bottom margin to prevent overlap with bug feature logo */
     }
-    .axis-change{
+    .axis-change {
         display: flex;
         flex-direction: column;
     }
+    .workspace {
+        flex-direction: column !important;
+    }
     .left {
         order: 1;
-        
+        width: 100% !important;
+        margin-bottom: 20px;
     }
-
     .right {
         order: 2;
+        width: 100% !important;
+        margin-bottom: 20px;
     }
-
     .exp {
         order: 3;
+        width: 100% !important;
+    }
+    #left.apparatus {
+        width: 100% !important;
+        height: auto !important;
+    }
+    #observations.right {
+        width: 100% !important;
+        height: auto !important;
     }
 }
 
@@ -163,11 +176,30 @@
 }
 
 .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 15px !important;
+    box-sizing: border-box !important;
+    background-color: white;
+}
+#add-modal, #edit-modal {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.modal.is-responsive {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.modal.is-responsive .modal-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 15px !important;
 }
 
 .close {
@@ -182,16 +214,6 @@
     color: black;
     text-decoration: none;
     cursor: pointer;
-}
-
-#add-modal {
-    width: 50%;
-    margin: auto;
-}
-
-#edit-modal {
-    width: 50%;
-    margin: auto;
 }
 
 
@@ -302,11 +324,14 @@
 .shape-list-container {
   font-family: 'Arial', sans-serif;
   margin-top: 10px;
+  margin-bottom: 20px; /* Add bottom margin */
   padding: 15px;
   background-color: #f8f9fa;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 100%;
+  width: 95%; /* Set width to 95% of parent container */
+  margin-left: auto;
+  margin-right: auto;
   height: 60vh; /* Set a fixed height, adjust as needed */
   overflow-x: auto; /* Allows horizontal scrolling if the list overflows */
 }
