@@ -10,6 +10,8 @@ const moveButton = document.getElementById("move-button");
 const modalbutton1 = document.querySelector(".edit-button");
 const modalbutton2 = document.querySelector(".add-button");
 let lockVertices = document.getElementById("lock-vertices-cb");
+let lockZoom = document.getElementById("lock-zoom-cb");
+let lockRotate = document.getElementById("lock-rotate-cb");
 let xyGrid = document.getElementById("xy-grid-cb");
 let yzGrid = document.getElementById("yz-grid-cb");
 let xzGrid = document.getElementById("xz-grid-cb");
@@ -20,7 +22,7 @@ let modalEdit = document.getElementById("edit-modal");
 let spanEditModal = document.getElementsByClassName("close")[0];
 var slider = document.getElementById("slider");
 slider.addEventListener("input", movePoint);
-document.getElementById("slider").max = document.getElementById("noofframes").value;
+document.getElementById("slider").max =1000;
 document.getElementById("slider").min = 0;
 slider.step = 1;
 
@@ -28,30 +30,32 @@ let max_x_scale = document.getElementById("scale-x").value;
 let max_y_scale = document.getElementById("scale-y").value;
 let max_z_scale = document.getElementById("scale-z").value;
 
-let vertexA = new THREE.Vector3(document.getElementById("vertex-00").value, document.getElementById("vertex-01").value, document.getElementById("vertex-02").value),
-  vertexB = new THREE.Vector3(document.getElementById("vertex-10").value, document.getElementById("vertex-11").value, document.getElementById("vertex-12").value),
-  vertexC = new THREE.Vector3(document.getElementById("vertex-20").value, document.getElementById("vertex-21").value, document.getElementById("vertex-22").value);
 
 let old_scale = [1, 1, 1];
 
-let noofframes = document.getElementById("noofframes").value;
+let noofframes =1000;
 let scene,
   PI = 3.141592653589793,
   camera,
   renderer,
   orbit,
   shapes = [],
-  grid1 = [],
-  grid2 = [],
-  grid3 = [],
+  xygrid = [],
+  yzgrid = [],
+  xzgrid = [],
   dragX = [],
   dragY = [],
-  dragZ = [],
+  dragz = [],
+  shapeList = [],
   lock = 0,
   dir = [],
-
-
   arrowHelper = [];
+
+
+let point = [];
+let shapeVertex = [];
+let dotList = [];
+let noOfShapes = 0;
 
 let trans_matrix = new THREE.Matrix4();
 trans_matrix.set(
@@ -60,6 +64,8 @@ trans_matrix.set(
   0, 0, 1, 0,
   0, 0, 0, 1
 );
+
+let shapeCount = [0, 0, 0, 0];
 
 // Modal controls for Add Shape Button
 let addModal = document.getElementById("add-modal");
@@ -74,237 +80,486 @@ window.onclick = function (event) {
     addModal.style.display = "none";
   }
 };
-lockVertices.addEventListener("click", () => {
+
+
+lockVertices.addEventListener("click", updateMouseButtons);
+lockZoom.addEventListener("click", updateMouseButtons);
+lockRotate.addEventListener("click", updateMouseButtons);
+
+function updateMouseButtons() {
+  let leftMouse = MOUSE.PAN; // Default behavior (panning with left mouse)
+  let middleMouse = MOUSE.PAN; // Set middle mouse to MOUSE.PAN but it will do nothing
+  let rightMouse = MOUSE.ROTATE; // Default behavior (rotation with right mouse)
+
+  // If lockVertices is checked, disable LEFT (no panning)
   if (lockVertices.checked) {
-    lock = 1;
-    orbit.mouseButtons = {
-      LEFT: MOUSE.PAN,
-      MIDDLE: MOUSE.DOLLY,
-      RIGHT: MOUSE.ROTATE,
-    };
-    orbit.target.set(0, 0, 0);
-    orbit.dampingFactor = 0.05;
-    orbit.enableDamping = true;
-  } else {
-    lock = 0;
-    orbit.mouseButtons = {
-      MIDDLE: MOUSE.DOLLY,
-      RIGHT: MOUSE.ROTATE,
-    };
-    orbit.target.set(0, 0, 0);
-    orbit.dampingFactor = 0.05;
-    orbit.enableDamping = true;
+    leftMouse = null; // Disable left mouse button (no panning)
   }
-});
+
+  // If lockZoom is checked, prevent MIDDLE (no zooming)
+  if (lockZoom.checked) {
+    middleMouse = null; // Disable middle mouse button (no zooming)
+    orbit.enableZoom = false; // Disable zoom functionality
+  } else {
+    orbit.enableZoom = true; // Enable zoom if lockZoom is unchecked
+  }
+
+  // If lockRotate is checked, disable RIGHT (no rotating)
+  if (lockRotate.checked) {
+    rightMouse = null; // Disable right mouse button (no rotating)
+  }
+
+  // Update the mouse buttons based on the checkbox states
+  orbit.mouseButtons = {
+    LEFT: leftMouse,
+    MIDDLE: middleMouse,
+    RIGHT: rightMouse,
+  };
+
+  // Ensure smooth damping and set target
+  orbit.target.set(0, 0, 0);
+  orbit.dampingFactor = 0.05;
+  orbit.enableDamping = true;
+
+  // Force an update on the controls
+  orbit.update();
+}
+
 xyGrid.addEventListener("click", () => {
   if (xyGrid.checked) {
-    var grid = new THREE.GridHelper(size, divisions);
-    var vector3 = new THREE.Vector3(0, 0, 1);
+    let grid = new THREE.GridHelper(size, divisions);
+    let vector3 = new THREE.Vector3(0, 1, 0);
     grid.lookAt(vector3);
-    grid1.push(grid);
-    scene.add(grid1[0]);
-  }
-  else {
-    scene.remove(grid1[0]);
-    grid1.pop();
+    xygrid.push(grid);
+    scene.add(xygrid[0]);
+  } else {
+    scene.remove(xygrid[0]);
+    xygrid.pop();
   }
 });
 xzGrid.addEventListener("click", () => {
   if (xzGrid.checked) {
-    var grid = new THREE.GridHelper(size, divisions);
-    grid.geometry.rotateZ(PI / 2);
-    grid3.push(grid);
-    scene.add(grid3[0]);
+    let grid = new THREE.GridHelper(size, divisions);
+    let vector3 = new THREE.Vector3(0, 0, 1);
+    grid.lookAt(vector3);
+    xzgrid.push(grid);
+    scene.add(xzgrid[0]);
   } else {
-    scene.remove(grid3[0]);
-    grid3.pop();
+    scene.remove(xzgrid[0]);
+    xzgrid.pop();
   }
 });
 yzGrid.addEventListener("click", () => {
   if (yzGrid.checked) {
-    var grid = new THREE.GridHelper(size, divisions);
-    var vector3 = new THREE.Vector3(0, 1, 0);
-    grid.lookAt(vector3);
-    grid2.push(grid);
-    scene.add(grid2[0]);
+    let grid = new THREE.GridHelper(size, divisions);
+    grid.geometry.rotateZ(PI / 2);
+    // grid.lookAt(vector3);
+    yzgrid.push(grid);
+    scene.add(yzgrid[0]);
   } else {
-    scene.remove(grid2[0]);
-    grid2.pop();
+    scene.remove(yzgrid[0]);
+    yzgrid.pop();
   }
 });
+
+function updateShapeList(shapeList) {
+  const shapeListDiv = document.getElementById("shape-list");
+  shapeListDiv.innerHTML = ""; // Clear previous list
+
+  const ul = document.createElement("ul");
+
+  shapeList.forEach((shape) => {
+    const li = document.createElement("li");
+
+    li.innerHTML = `
+      <div class="shape-info">
+        <span class="shape-id">${shape.id}</span>
+        <span class="coordinates">(${shape.x}, ${shape.y}, ${shape.z})</span>
+      </div>
+      <div class="button-group">
+        <button class="select-btn" 
+                data-name="${shape.id}" 
+                data-coordinates="${shape.x},${shape.y},${shape.z}">
+          Select
+        </button>
+        
+      </div>
+    `;
+    ul.appendChild(li);
+  });
+
+  shapeListDiv.appendChild(ul);
+
+  // Attach event listeners for Select, Edit, and Delete buttons
+  document.querySelectorAll(".select-btn").forEach((button) => {
+    button.addEventListener("click", handleSelect, false);
+  });
+
+  document.querySelectorAll(".edit-btn").forEach((button) => {
+    button.addEventListener("click", handleEdit, false);
+  });
+
+  document.querySelectorAll(".delete-btn").forEach((button) => {
+    button.addEventListener("click", handleDelete, false);
+  });
+}
+
+function handleSelect(event) {
+  const shapeName = event.target.getAttribute("data-name");
+  const shapeCoordinates = event.target.getAttribute("data-coordinates");
+
+  // Validate the selected shape data
+  if (!shapeName || !shapeCoordinates) {
+    console.error("Missing shape name or coordinates");
+    return;
+  }
+
+  console.log(`Shape Selected: ${shapeName}`);
+  console.log(`Coordinates: ${shapeCoordinates}`);
+
+  // Safely parse coordinates
+  let coordsArray;
+  try {
+    coordsArray = shapeCoordinates
+      .replace(/[()]/g, "")
+      .split(",")
+      .map((coord) => parseFloat(coord.trim()));
+
+    if (coordsArray.length !== 3 || coordsArray.some(isNaN)) {
+      throw new Error("Invalid coordinate format");
+    }
+  } catch (error) {
+    console.error("Error parsing coordinates:", error);
+    return;
+  }
+
+  const shapePosition = new THREE.Vector3(
+    coordsArray[0],
+    coordsArray[1],
+    coordsArray[2]
+  );
+
+  // Find the shape in the shapeList based on its coordinates
+  const shape = shapes.find(
+    (s) =>
+      s.position.x == coordsArray[0] &&
+      s.position.y == coordsArray[1] &&
+      s.position.z == coordsArray[2]
+  );
+
+  if (!shape) {
+    console.log("Shape not found in shapes.");
+    return;
+  }
+
+  // Handle selection and deselection of shapes
+  const existingLine = scene.getObjectByName("selection-line");
+
+  if (existingLine && existingLine.position.equals(shapePosition)) {
+    scene.remove(existingLine);
+    console.log("Deselected the shape.");
+    return;
+  }
+
+  // Remove existing selection line
+  if (existingLine) {
+    scene.remove(existingLine);
+  }
+
+  // Create a new selection line
+  const geometry = new THREE.SphereGeometry(1, 32, 16);
+  const edges = new THREE.EdgesGeometry(geometry);
+  const line = new THREE.LineSegments(
+    edges,
+    new THREE.LineBasicMaterial({ color: 0xffffff })
+  );
+  line.position.set(shapePosition.x, shapePosition.y, shapePosition.z);
+  line.name = "selection-line"; // Add a name for easy identification
+  scene.add(line);
+  console.log("Selection line created at shape's position.");
+
+  // Get delete and edit buttons
+  const deleteButton = document.getElementById("delete-shape-btn");
+  const editButton = document.getElementById("edit-shape-btn");
+
+  // Clear previous event listeners before setting them again
+  deleteButton.onclick = () => handleDelete(shape, line, coordsArray);
+  editButton.onclick = () => handleEdit(shape, line, coordsArray);
+}
+
+function handleDelete(shape, line, coordsArray) {
+  // Remove the selected shape and line from the scene
+  shapeList = shapeList.filter(
+    (s) =>
+      !(s.x == coordsArray[0] && s.y == coordsArray[1] && s.z == coordsArray[2])
+  );
+
+  shapes = shapes.filter(
+    (s) =>
+      !(
+        s.position.x == coordsArray[0] &&
+        s.position.y == coordsArray[1] &&
+        s.position.z == coordsArray[2]
+      )
+  );
+  scene.remove(line);
+  scene.remove(shape);
+
+  // Remove the shape from the shapeList based on coordinates
+
+  updateShapeList(shapeList);
+  console.log(`Shape deleted.`);
+}
+
+function handleEdit(shape, line, coordsArray) {
+  const editModal = document.getElementById("edit-modal");
+  editModal.style.display = "block";
+
+  // Fill the modal fields with the current values of the shape
+  const shapeTypeSelect = document.querySelector("select");
+  document.getElementById("x").value = shape.position.x;
+  document.getElementById("y").value = shape.position.y;
+  document.getElementById("z").value = shape.position.z;
+  shapeTypeSelect.value = shape.name; // Assuming shape.name holds the current shape type
+
+  // Use a single event listener to handle edit confirmation
+  const modalEditButton = document.querySelector(".edit-button");
+
+  // Remove any previous listener to avoid duplication
+  modalEditButton.removeEventListener("click", handleEditConfirmation);
+
+  // Add the event listener
+  modalEditButton.addEventListener("click", handleEditConfirmation);
+
+  function handleEditConfirmation() {
+    // Get new coordinates from the modal inputs
+    const xcoord = parseFloat(document.getElementById("x").value);
+    const ycoord = parseFloat(document.getElementById("y").value);
+    const zcoord = parseFloat(document.getElementById("z").value);
+    const shapeType = shapeTypeSelect.value;
+
+    // Validate the new coordinates
+    if (isNaN(xcoord) || isNaN(ycoord) || isNaN(zcoord)) {
+      console.error("Invalid coordinate input");
+      return;
+    }
+
+    // Remove the current shape and selection line from the scene
+    scene.remove(line); // Remove selection line
+    scene.remove(shape); // Remove the shape from the scene
+
+    // Remove the current shape from shapeList
+    shapeList = shapeList.filter(
+      (s) =>
+        !(
+          s.x == coordsArray[0] &&
+          s.y == coordsArray[1] &&
+          s.z == coordsArray[2]
+        )
+    );
+
+    shapes = shapes.filter(
+      (s) =>
+        !(
+          s.position.x == coordsArray[0] &&
+          s.position.y == coordsArray[1] &&
+          s.position.z == coordsArray[2]
+        )
+    );
+
+    // Create a new shape based on the selected type
+    const createShape = {
+      Cube: createCube,
+      Tetrahedron: createTetrahedron,
+      Octahedron: createOctahedron,
+      Dodecahedron: createDodecahedron,
+    }[shapeType];
+
+    if (createShape) {
+      createShape(
+        xcoord,
+        ycoord,
+        zcoord,
+        shapes,
+        shapeList,
+        shapeCount,
+        scene,
+        point,
+        shapeVertex,
+        dragX,
+        dragY,
+        dragz
+      );
+    } else {
+      console.error("Invalid shape type");
+      return;
+    }
+
+    // Update shapeList and the UI
+    noOfShapes++;
+    updateShapeList(shapeList);
+
+    // Close the modal after saving the shape
+    editModal.style.display = "none";
+
+    // After edit confirmation, remove the event listener to avoid duplication on next clicks
+    modalEditButton.removeEventListener("click", handleEditConfirmation);
+  }
+}
+
 let buttons = document.getElementsByTagName("button");
 const size = 50;
 const divisions = 25;
 
 document.getElementById("add-shape-btn").onclick = function () {
-  modalAdd.style.display = "block";
-  modalbutton2.addEventListener("click", () => {
-    let xcoord = document.getElementById("x1").value;
-    let ycoord = document.getElementById("y1").value;
-    let zcoord = document.getElementById("z1").value;
-    noOfShapes++;
-    if (document.getElementById("shape-add-dropdown").value === "Cube") {
-      createCube(xcoord, ycoord, zcoord, shapes, scene, point, shapeVertex, dragX, dragY, dragZ);
-    }
-    if (document.getElementById("shape-add-dropdown").value === "Tetrahedron") {
-      createTetrahedron(xcoord, ycoord, zcoord, shapes, scene, point, shapeVertex, dragX, dragY, dragZ);
-    }
-    if (document.getElementById("shape-add-dropdown").value === "Octahedron") {
-      createOctahedron(xcoord, ycoord, zcoord, shapes, scene, point, shapeVertex, dragX, dragY, dragZ);
-    }
-    if (document.getElementById("shape-add-dropdown").value === "Dodecahedron") {
-      createDodecahedron(xcoord, ycoord, zcoord, shapes, scene, point, shapeVertex, dragX, dragY, dragZ);
-    }
-    modalAdd.style.display = "none";
-  });
+  addModal.style.display = "block";
+
+  // First, remove any existing event listener before adding a new one
+  modalbutton2.removeEventListener("click", handleShapeAddition);
+
+  // Add the event listener for the modal button
+  modalbutton2.addEventListener("click", handleShapeAddition);
 };
-let raycaster = new THREE.Raycaster();
-let raycaster1 = new THREE.Raycaster();
-let mouse = new THREE.Vector2();
-let plane = new THREE.Plane();
-let pNormal = new THREE.Vector3(0, 1, 0);
-let planeIntersect = new THREE.Vector3();
-let pIntersect = new THREE.Vector3();
-let shift = new THREE.Vector3();
-let isDragging = false;
-let dragObject;
-let point = [];
-let shapeVertex
-  = [];
-let dotList = [];
-let noOfShapes = 0;
 
-document.addEventListener("dblclick", ondblclick, false);
-function ondblclick(event) {
-  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-  raycaster1.setFromCamera(mouse, camera);
-  let intersects = raycaster1.intersectObjects(shapes);
-  if (intersects.length > 0) {
-    const geometry = new THREE.SphereGeometry(1, 32, 16);
-    const edges = new THREE.EdgesGeometry(geometry);
-    const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0xffffff }));
-    line.position.set(intersects[0].object.position.x, intersects[0].object.position.y, intersects[0].object.position.z
+// Function to handle shape addition
+function handleShapeAddition() {
+  let xcoord = document.getElementById("x1").value;
+  let ycoord = document.getElementById("y1").value;
+  let zcoord = document.getElementById("z1").value;
+  noOfShapes++;
+
+  const shapeType = document.getElementById("shape-add-dropdown").value;
+
+  if (shapeType === "Cube") {
+    createCube(
+      xcoord,
+      ycoord,
+      zcoord,
+      shapes,
+      shapeList,
+      shapeCount,
+      scene,
+      point,
+      shapeVertex,
+      dragX,
+      dragY,
+      dragz
     );
-    scene.add(line);
-    document.getElementById("delete-shape-btn").onclick = function () {
-      scene.remove(line);
-      for (let i = 0; i < intersects.length; i++) {
-        scene.remove(intersects[i].object);
-        noOfShapes--;
-      }
-    };
-
-    document.getElementById("edit-shape-btn").onclick = function () {
-      document.getElementById("edit-modal").style.display = "block";
-      document
-        .querySelector(".edit-button")
-        .addEventListener("click", () => {
-          for (let i = 0; i < intersects.length; i++) {
-            scene.remove(intersects[i].object);
-            scene.remove(line);
-          }
-          var xcoord = document.getElementById("x").value;
-          var ycoord = document.getElementById("y").value;
-          var zcoord = document.getElementById("z").value;
-          noOfShapes++;
-          if (document.querySelector("select").value === "Cube") {
-            createCube(xcoord, ycoord, zcoord, shapes, scene, point, shapeVertex, dragX, dragY, dragZ);
-          }
-          if (document.querySelector("select").value === "Tetrahedron") {
-            createTetrahedron(xcoord, ycoord, zcoord, shapes, scene, point, shapeVertex, dragX, dragY, dragZ);
-          }
-          if (document.querySelector("select").value === "Octahedron") {
-            createOctahedron(xcoord, ycoord, zcoord, shapes, scene, point, shapeVertex, dragX, dragY, dragZ);
-          }
-          if (document.querySelector("select").value === "Dodecahedron") {
-            createDodecahedron(xcoord, ycoord, zcoord, shapes, scene, point, shapeVertex, dragX, dragY, dragZ);
-          }
-          document.getElementById("edit-modal").style.display = "none";
-        });
-    };
+  } else if (shapeType === "Tetrahedron") {
+    createTetrahedron(
+      xcoord,
+      ycoord,
+      zcoord,
+      shapes,
+      shapeList,
+      shapeCount,
+      scene,
+      point,
+      shapeVertex,
+      dragX,
+      dragY,
+      dragz
+    );
+  } else if (shapeType === "Octahedron") {
+    createOctahedron(
+      xcoord,
+      ycoord,
+      zcoord,
+      shapes,
+      shapeList,
+      shapeCount,
+      scene,
+      point,
+      shapeVertex,
+      dragX,
+      dragY,
+      dragz
+    );
+  } else if (shapeType === "Dodecahedron") {
+    createDodecahedron(
+      xcoord,
+      ycoord,
+      zcoord,
+      shapes,
+      shapeList,
+      shapeCount,
+      scene,
+      point,
+      shapeVertex,
+      dragX,
+      dragY,
+      dragz
+    );
   }
+  updateShapeList(shapeList); // Update the UI
+  addModal.style.display = "none";
 }
 
-spanEditModal.onclick = function () {
-  modalEdit.style.display = "none";
-};
 
-document.addEventListener("pointermove", (event) => {
-  const rect = renderer.domElement.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
+function applyScaling(event) {
+  event.preventDefault(); // Prevent the default form submission
+  max_x_scale = parseFloat(document.getElementById("scale-x").value);
+  max_y_scale = parseFloat(document.getElementById("scale-y").value);
+  max_z_scale = parseFloat(document.getElementById("scale-z").value);
 
-  mouse.x = (x / container.clientWidth) * 2 - 1;
-  mouse.y = (y / container.clientHeight) * -2 + 1;
-  if (mouse.x < 1 && mouse.x > -1 && mouse.y < 1 && mouse.y > -1) {
-    raycaster.setFromCamera(mouse, camera);
-    if (isDragging && lock === 0) {
-      for (let i = 0; i < shapes.length; i++) {
-        raycaster.ray.intersectPlane(plane, planeIntersect);
-        shapes[i].geometry.vertices[0].set(
-          planeIntersect.x + shift.x,
-          planeIntersect.y + shift.y,
-          planeIntersect.z + shift.z
-        );
-        shapes[i].geometry.verticesNeedUpdate = true;
-        shapeVertex[i].position.set(
-          planeIntersect.x + shift.x - dragX[i],
-          planeIntersect.y + shift.y - dragY[i],
-          planeIntersect.z + shift.z - dragZ[i]
-        );
-      }
-      raycaster.ray.intersectPlane(plane, planeIntersect);
-    } else if (isDragging) {
-      raycaster.ray.intersectPlane(plane, planeIntersect);
-    }
-  }
-});
-document.addEventListener("pointerdown", () => {
-  switch (event.which) {
-    case 1:
-      const rect = renderer.domElement.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
+  // Your scaling logic here
+  console.log("Scaling applied:", max_x_scale, max_y_scale, max_z_scale);
 
-      mouse.x = (x / container.clientWidth) * 2 - 1;
-      mouse.y = (y / container.clientHeight) * -2 + 1;
-      pNormal.copy(camera.position).normalize();
-      plane.setFromNormalAndCoplanarPoint(pNormal, scene.position);
-      raycaster.setFromCamera(mouse, camera);
-      raycaster.ray.intersectPlane(plane, planeIntersect);
-      let position = new THREE.Vector3(
-        shapeVertex[0].position.x,
-        shapeVertex[0].position.y,
-        shapeVertex[0].position.z
-      );
-      shift.subVectors(position, planeIntersect);
-      isDragging = true;
-      dragObject = shapes[shapes.length - 1];
-      break;
-  }
-});
-document.addEventListener("pointerup", () => {
-  isDragging = false;
-  dragObject = null;
-});
+  // Optionally, you can remove the event listener after it's triggered once
+  // event.target.removeEventListener("submit", applyScaling);
+}
+
+
+
+// Add event listeners for Apply Scaling and Apply Translation buttons
+document
+  .getElementById("apply-scaling-btn")
+  .addEventListener("click", applyScaling);
+
 function movePoint(e) {
-  var target = e.target ? e.target : e.srcElement;
-  let scale = new Array();
-  scale[0] = 1 + (target.value / noofframes) * (max_x_scale - 1);
-  scale[1] = 1 + (target.value / noofframes) * (max_y_scale - 1);
-  scale[2] = 1 + (target.value / noofframes) * (max_z_scale - 1);
+  var target = e.target;
+  
+let scale = [
+  1 + (target.value / noofframes) * (max_x_scale - 1),
+  1 + (target.value / noofframes) * (max_y_scale - 1),
+  1 + (target.value / noofframes) * (max_z_scale - 1),
+];
 
-  let scale_m = new THREE.Matrix4();
-  scale_m.makeScale(scale[0] / old_scale[0], scale[1] / old_scale[1], scale[2] / old_scale[2]);
+let scale_m = new THREE.Matrix4();
+scale_m.makeScale(
+  scale[0] / old_scale[0],
+  scale[1] / old_scale[1],
+  scale[2] / old_scale[2]
+);
 
-  dotList[0].geometry.applyMatrix4(scale_m);
-  dotList[0].geometry.verticesNeedUpdate = true;
+for (let i = 0; i < 3; i++) {
+  old_scale[i] = scale[i];
+}
 
-  for (let i = 0; i < 3; i++)
-    old_scale[i] = scale[i];
+trans_matrix.multiply(scale_m);
 
-  trans_matrix.multiply(scale_m);
+shapes.forEach((shape) => {
+  shape.geometry.applyMatrix4(scale_m);
+
+  // Update geometry attributes
+  if (shape.geometry.isBufferGeometry) {
+    shape.geometry.attributes.position.needsUpdate = true;
+    shape.geometry.computeBoundingBox(); // Only if bounding box is needed
+    shape.geometry.computeVertexNormals(); // Only if normals are affected
+  }
+
+  // Update edges
+  shape.traverse((child) => {
+    if (child.isLineSegments) {
+      child.geometry.applyMatrix4(scale_m);
+      if (child.geometry.isBufferGeometry) {
+        child.geometry.attributes.position.needsUpdate = true;
+      }
+    }
+  });
+});
+
+
 
   if (target.value <= 0) {
     trans_matrix.set(
@@ -314,6 +569,27 @@ function movePoint(e) {
       0, 0, 0, 1
     );
   }
+  if (parseFloat(e.target.value) === parseFloat(e.target.max)) {
+    trans_matrix.set(
+      max_x_scale,
+      0,
+      0,
+      0,
+      0,
+      max_y_scale,
+      0,
+      0,
+      0,
+      0,
+      max_z_scale,
+      0,
+      0,
+      0,
+      0,
+      1
+    );
+  }
+
 
   document.getElementById("matrix-00").value = trans_matrix.elements[0];
   document.getElementById("matrix-01").value = trans_matrix.elements[1];
@@ -336,130 +612,261 @@ function movePoint(e) {
   document.getElementById("matrix-33").value = trans_matrix.elements[15];
 }
 
-document.getElementById("noofframes").onchange = function () {
-  let new_value = document.getElementById("noofframes").value;
-  let new_factor = [noofframes / new_value, noofframes / new_value, noofframes / new_value];
-  for (let i = 0; i < 3; i++) {
-    if (old_scale[i] === 1) {
-      new_factor[i] = 1;
+
+// document.getElementById("noofframes").onchange = function () {
+//   let new_value = document.getElementById("noofframes").value;
+//   let new_factor = [
+//     noofframes / new_value,
+//     noofframes / new_value,
+//     noofframes / new_value,
+//   ];
+
+//   // Adjust old_scale only if necessary
+//   for (let i = 0; i < 3; i++) {
+//     if (old_scale[i] === 1) {
+//       new_factor[i] = 1;
+//     }
+//   }
+
+//   let scale_m = new THREE.Matrix4();
+//   scale_m.makeScale(new_factor[0], new_factor[1], new_factor[2]);
+
+//   // Update old_scale with the new value
+//   for (let i = 0; i < 3; i++) {
+//     old_scale[i] *= noofframes / new_value;
+//   }
+
+//   // Apply the scaling matrix to the transformation matrix
+//   trans_matrix.multiply(scale_m);
+
+//   // Update matrix values in the DOM
+//   document.getElementById("matrix-00").value = trans_matrix.elements[0];
+//   document.getElementById("matrix-11").value = trans_matrix.elements[5];
+//   document.getElementById("matrix-22").value = trans_matrix.elements[10];
+
+//   // Update the slider max value
+//   document.getElementById("slider").max = new_value;
+// };
+
+// document.getElementById("scale-x").onchange = function () {
+//   let new_scale = document.getElementById("scale-x").value;
+//   if (old_scale[0] !== 1) {
+//     let scale_m = new THREE.Matrix4();
+//     scale_m.makeScale(new_scale / max_x_scale, 1, 1);
+
+//     old_scale[0] *= new_scale / max_x_scale;
+//     trans_matrix.multiply(scale_m);
+//     document.getElementById("matrix-00").value = trans_matrix.elements[0];
+//   }
+
+//   max_x_scale = new_scale;
+// };
+// document.getElementById("scale-y").onchange = function () {
+//   let new_scale = document.getElementById("scale-y").value;
+//   if (old_scale[1] !== 1) {
+//     let scale_m = new THREE.Matrix4();
+//     scale_m.makeScale(1, new_scale / max_y_scale, 1);
+
+//     old_scale[1] *= new_scale / max_y_scale;
+//     trans_matrix.multiply(scale_m);
+//     document.getElementById("matrix-11").value = trans_matrix.elements[5];
+//   }
+
+//   max_y_scale = new_scale;
+// };
+// document.getElementById("scale-z").onchange = function () {
+//   let new_scale = document.getElementById("scale-z").value;
+//   if (old_scale[2] !== 1) {
+//     let scale_m = new THREE.Matrix4();
+//     scale_m.makeScale(1, 1, new_scale / max_z_scale);
+
+//     old_scale[2] *= new_scale / max_z_scale;
+//     trans_matrix.multiply(scale_m);
+//     document.getElementById("matrix-22").value = trans_matrix.elements[10];
+//   }
+
+//   max_z_scale = new_scale;
+// };
+
+// Select elements
+// Select elements
+const toggleInstructions = document.getElementById("toggle-instructions");
+const procedureMessage = document.getElementById("procedure-message");
+
+// Function to show the instructions overlay
+const showInstructions = () => {
+  procedureMessage.style.display = "block";
+};
+
+// Function to hide the instructions overlay
+const hideInstructions = (event) => {
+  // Close if click is outside the overlay or if it's the toggle button again
+  if (
+    !procedureMessage.contains(event.target) &&
+    event.target !== toggleInstructions
+  ) {
+    procedureMessage.style.display = "none";
+  }
+};
+
+// Attach event listeners
+toggleInstructions.addEventListener("click", (event) => {
+  // Toggle the visibility of the overlay
+  if (procedureMessage.style.display === "block") {
+    procedureMessage.style.display = "none";
+  } else {
+    showInstructions();
+  }
+  event.stopPropagation(); // Prevent immediate closure after clicking the button
+});
+
+document.addEventListener("click", hideInstructions);
+
+// Prevent closing the overlay when clicking inside it
+procedureMessage.addEventListener("click", (event) => {
+  event.stopPropagation(); // Prevent the click inside from closing the overlay
+});
+
+
+
+// // Function to reset slider to 0 and shape to original size
+// function resetSliderAndShape() {
+//   const slider = document.getElementById("slider"); // Get the slider element
+//   slider.value = 0; // Reset slider to 0
+
+//   // Reset shape scale to original size
+//   shapes.forEach(shape => {
+//     shape.scale.set(1, 1, 1);  // Reset shape scale to original (1,1,1)
+//   });
+// }
+
+// // Add event listeners to X, Y, and Z scaling inputs
+// document.getElementById("scale-x").addEventListener("input", resetSliderAndShape);
+// document.getElementById("scale-y").addEventListener("input", resetSliderAndShape);
+// document.getElementById("scale-z").addEventListener("input", resetSliderAndShape);
+
+function createLabel(text, direction, length) {
+  const fontLoader = new THREE.FontLoader();
+  let labelMesh;
+
+  fontLoader.load(
+    "https://threejs.org/examples/fonts/helvetiker_regular.typeface.json",
+    function (font) {
+      const geometry = new THREE.TextGeometry(text, {
+        font: font,
+        size: 0.6,
+        height: 0.1,
+      });
+      const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+      labelMesh = new THREE.Mesh(geometry, material);
+
+      // Position the label at the end of the arrow (tip of the arrow)
+      const labelPosition = direction.clone().multiplyScalar(length);
+      labelMesh.position.copy(labelPosition);
+      scene.add(labelMesh);
     }
-  }
+  );
 
-  let scale_m = new THREE.Matrix4();
-  scale_m.makeScale(new_factor[0], new_factor[1], new_factor[2]);
-  dotList[0].geometry.applyMatrix4(scale_m);
-  dotList[0].geometry.verticesNeedUpdate = true;
-
-  for (let i = 0; i < 3; i++)
-    old_scale[i] *= noofframes / new_value;
-
-  trans_matrix.multiply(scale_m);
-  document.getElementById("matrix-00").value = trans_matrix.elements[0];
-  document.getElementById("matrix-11").value = trans_matrix.elements[5];
-  document.getElementById("matrix-22").value = trans_matrix.elements[10];
-
-  document.getElementById("slider").max = new_value;
-};
-
-document.getElementById("scale-x").onchange = function () {
-  let new_scale = document.getElementById("scale-x").value;
-  if (old_scale[0] !== 1) {
-    let scale_m = new THREE.Matrix4();
-    scale_m.makeScale(new_scale / max_x_scale, 1, 1);
-    dotList[0].geometry.applyMatrix4(scale_m);
-    dotList[0].geometry.verticesNeedUpdate = true;
-
-    old_scale[0] *= new_scale / max_x_scale;
-
-    trans_matrix.multiply(scale_m);
-    document.getElementById("matrix-00").value = trans_matrix.elements[0];
-  }
-
-  max_x_scale = new_scale;
-};
-document.getElementById("scale-y").onchange = function () {
-  let new_scale = document.getElementById("scale-y").value;
-  if (old_scale[1] !== 1) {
-    let scale_m = new THREE.Matrix4();
-    scale_m.makeScale(1, new_scale / max_y_scale, 1);
-    dotList[0].geometry.applyMatrix4(scale_m);
-    dotList[0].geometry.verticesNeedUpdate = true;
-
-    old_scale[1] *= new_scale / max_y_scale;
-
-    trans_matrix.multiply(scale_m);
-    document.getElementById("matrix-11").value = trans_matrix.elements[5];
-  }
-
-  max_y_scale = new_scale;
-};
-document.getElementById("scale-z").onchange = function () {
-  let new_scale = document.getElementById("scale-z").value;
-  if (old_scale[2] !== 1) {
-    let scale_m = new THREE.Matrix4();
-    scale_m.makeScale(1, 1, new_scale / max_z_scale);
-    dotList[0].geometry.applyMatrix4(scale_m);
-    dotList[0].geometry.verticesNeedUpdate = true;
-
-    old_scale[2] *= new_scale / max_z_scale;
-
-    trans_matrix.multiply(scale_m);
-    document.getElementById("matrix-22").value = trans_matrix.elements[10];
-  }
-
-  max_z_scale = new_scale;
+  return labelMesh;
 }
 
-moveButton.addEventListener("click", () => {
-  vertexA = new THREE.Vector3(document.getElementById("vertex-00").value, document.getElementById("vertex-01").value, document.getElementById("vertex-02").value),
-    vertexB = new THREE.Vector3(document.getElementById("vertex-10").value, document.getElementById("vertex-11").value, document.getElementById("vertex-12").value),
-    vertexC = new THREE.Vector3(document.getElementById("vertex-20").value, document.getElementById("vertex-21").value, document.getElementById("vertex-22").value);
-
-  scene.remove(dotList[0]);
-  dotList.pop();
-  Triangle(vertexA, vertexB, vertexC, scene, dotList);
-});
 scene = new THREE.Scene();
-scene.background = new THREE.Color(0x121212);
+scene.background = new THREE.Color(0x333333);
 camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 1000);
 let init = function () {
-  camera.position.z = 5;
-  camera.position.x = 2;
-  camera.position.y = 2;
+  camera.position.set(25, 25, 25); // Set camera position behind and above the origin
+
+  camera.lookAt(10, 10, 5);
+  const light = new THREE.DirectionalLight(0xffffff, 3);
+  light.position.set(1, 1, 1).normalize();
+  scene.add(light);
   const gridHelper = new THREE.GridHelper(size, divisions);
   const count = 1;
-  dir[0] = new THREE.Vector3(1, 0, 0);
-  dir[1] = new THREE.Vector3(0, 1, 0);
-  dir[2] = new THREE.Vector3(0, 0, 1);
-  dir[3] = new THREE.Vector3(-1, 0, 0);
-  dir[4] = new THREE.Vector3(0, -1, 0);
-  dir[5] = new THREE.Vector3(0, 0, -1);
+  
+  const arrowHelper = [];
+  const dir = [
+    new THREE.Vector3(1, 0, 0), // +X
+    new THREE.Vector3(0, 1, 0), // +Y
+    new THREE.Vector3(0, 0, 1), // +Z
+    new THREE.Vector3(-1, 0, 0), // -X
+    new THREE.Vector3(0, -1, 0), // -Y
+    new THREE.Vector3(0, 0, -1), // -Z
+  ];
+
+  const labels = ["+X", "+Y", "+Z", "-X", "-Y", "-Z"]; // Labels for each axis
   const origin = new THREE.Vector3(0, 0, 0);
   const length = 10;
-  arrowHelper[0] = new THREE.ArrowHelper(dir[0], origin, length, "red");
-  arrowHelper[1] = new THREE.ArrowHelper(dir[1], origin, length, "yellow");
-  arrowHelper[2] = new THREE.ArrowHelper(dir[2], origin, length, "blue");
-  arrowHelper[3] = new THREE.ArrowHelper(dir[3], origin, length, "red");
-  arrowHelper[4] = new THREE.ArrowHelper(dir[4], origin, length, "yellow");
-  arrowHelper[5] = new THREE.ArrowHelper(dir[5], origin, length, "blue");
+
+  // Loop through the axes
   for (let i = 0; i < 6; i++) {
+    // Determine color based on the direction
+    let color;
+    if (i === 0 || i === 3) {
+      color = "red"; // +X and -X axes
+    } else if (i === 1 || i === 4) {
+      color = "yellow"; // +Y and -Y axes
+    } else {
+      color = "blue"; // +Z and -Z axes
+    }
+
+    // Create the arrow helper for the current direction and color
+    arrowHelper[i] = new THREE.ArrowHelper(dir[i], origin, length, color);
     scene.add(arrowHelper[i]);
+
+    // Create label for each axis and position it at the tip of the arrow
+    const label = createLabel(labels[i], dir[i], length);
+    scene.add(label);
   }
-  let tri_geo = Triangle(vertexA, vertexB, vertexC, scene, dotList);
+
+  createCube(
+    5,
+    1,
+    0,
+    shapes,
+    shapeList,
+    shapeCount,
+    scene,
+    point,
+    shapeVertex,
+    dragX,
+    dragY,
+    dragz
+  );
+
+  createTetrahedron(
+    4,
+    5,
+    2,
+    shapes,
+    shapeList,
+    shapeCount,
+    scene,
+    point,
+    shapeVertex,
+    dragX,
+    dragY,
+    dragz
+  );
+  updateShapeList(shapeList); // Update the UI
+
+  // let tri_geo = Triangle(vertexA, vertexB, vertexC, scene, dotList);
   renderer = new THREE.WebGLRenderer();
   let w = container.offsetWidth;
   let h = container.offsetHeight;
-  renderer.setSize(w, h);
+  renderer.setSize(w, 0.85*h);
   container.appendChild(renderer.domElement);
   orbit = new OrbitControls(camera, renderer.domElement);
-  orbit.mouseButtons = {
-    MIDDLE: MOUSE.DOLLY,
-    RIGHT: MOUSE.ROTATE,
-  };
-  orbit.target.set(0, 0, 0);
-  orbit.enableDamping = true;
+   orbit.mouseButtons = {
+     LEFT: MOUSE.PAN,
+     MIDDLE: MOUSE.DOLLY,
+     RIGHT: MOUSE.ROTATE,
+   };
+   orbit.target.set(0, 0, 0);
+   orbit.enableDamping = true;
 };
 let mainLoop = function () {
+   orbit.update(); // Important for damping
+   camera.updateMatrixWorld();
   renderer.render(scene, camera);
   requestAnimationFrame(mainLoop);
 };
