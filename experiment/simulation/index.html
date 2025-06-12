@@ -96,24 +96,50 @@
                     <ul style="list-style-type: disc; padding-left: 20px;">
                         <li>
                             <strong>Set Scaling Factors:</strong> Adjust the scaling factors for <strong>X</strong>,
-                            <strong>Y</strong>,
-                            and <strong>Z</strong> axes using the input fields or sliders provided.
+                            <strong>Y</strong>, and <strong>Z</strong> axes using the input fields.
+                            <ul style="list-style-type: disc; padding-left: 20px;">
+                                <li>Enter values greater than 0.1 for each axis</li>
+                                <li>Values represent the scaling factor (e.g., 2 means double the size)</li>
+                            </ul>
                         </li>
                         <li>
-                            <strong style="color:#1976D2">Apply Scaling:</strong> Click to apply the current scaling values set using the sliders or input fields to all selected shapes.
-
+                            <strong style="color:#1976D2">Apply Scaling:</strong> Click to apply the current scaling values to the selected shape.
+                            <ul style="list-style-type: disc; padding-left: 20px;">
+                                <li>Make sure to select a shape first</li>
+                                <li>The transformation matrix will update to show the new scaling values</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Animation Slider:</strong> Use the slider to smoothly animate between the original size and the target scaling.
+                            <ul style="list-style-type: disc; padding-left: 20px;">
+                                <li>Move the slider to see the scaling effect in real-time</li>
+                                <li>The transformation matrix updates dynamically as you move the slider</li>
+                            </ul>
                         </li>
                     </ul>
                 </li>
 
                 <li class="instr-font">
                     <strong style="font-size: 19px;">🔍Transformation Matrix:</strong>
-                    Matrix whose diagonal elements
-                    represent scaling factors for X, Y, and Z axes, while non-diagonal elements are zero, used to resize
-                    geometric
-                    shapes proportionally.
+                    <ul style="list-style-type: disc; padding-left: 20px;">
+                        <li>The 4x4 matrix represents the current scaling transformation</li>
+                        <li>Diagonal elements (top-left to bottom-right) show the scaling factors:
+                            <ul style="list-style-type: disc; padding-left: 20px;">
+                                <li>First element (top-left): X-axis scaling</li>
+                                <li>Second element (middle): Y-axis scaling</li>
+                                <li>Third element (middle): Z-axis scaling</li>
+                                <li>Last element (bottom-right): Always 1</li>
+                            </ul>
+                        </li>
+                        <li>Non-diagonal elements are set to 0 for pure scaling</li>
+                        <li>The matrix updates in real-time as you:
+                            <ul style="list-style-type: disc; padding-left: 20px;">
+                                <li>Apply new scaling values</li>
+                                <li>Move the animation slider</li>
+                            </ul>
+                        </li>
+                    </ul>
                 </li>
-
 
                 <li class="instr-font">
                     <strong style="font-size: 19px;">📊 Grid Options</strong>:
@@ -123,26 +149,42 @@
                     </ul>
                 </li>
 
-
                 <li class="instr-font">
-                    <strong style="font-size: 19px;">🎚️Slider Control</strong>: Move the sliders to adjust scaling along the X, Y, and Z axes.
-                    ➡️ The values set here are applied to shapes when the "Apply Scaling" button is clicked.
-
+                    <strong style="font-size: 19px;">🎚️Slider Control</strong>:
+                    <ul style="list-style-type: disc; padding-left: 20px;">
+                        <li>Use the slider to smoothly animate the scaling transformation</li>
+                        <li>The slider value (0-1000) is normalized to create a smooth transition:
+                            <ul style="list-style-type: disc; padding-left: 20px;">
+                                <li>0: Original size</li>
+                                <li>1000: Target scaling values</li>
+                            </ul>
+                        </li>
+                        <li>The transformation matrix and shape update in real-time as you move the slider</li>
+                    </ul>
                 </li>
 
                 <li class="instr-font">
-                    <strong style="font-size: 19px;color: #016b2d;">↺ Reset All</strong>: Click the "Reset All" button
-                    to revert all controls
-                    and settings to their default values.
+                    <strong style="font-size: 19px;color: #016b2d;">↺ Reset All</strong>:
+                    <ul style="list-style-type: disc; padding-left: 20px;">
+                        <li>Click the "Reset All" button to:
+                            <ul style="list-style-type: disc; padding-left: 20px;">
+                                <li>Reset all shapes to their original size</li>
+                                <li>Reset the transformation matrix to identity</li>
+                                <li>Reset the slider to 0</li>
+                                <li>Clear all scaling values</li>
+                            </ul>
+                        </li>
+                    </ul>
                 </li>
-
-
 
                 <li class="instr-font">
                     <p>
-                        <strong style="color: #d42811; font-size: 20px;">NOTE:</strong> Make sure the slider is at zero
-                        before making any changes to
-                        for accurate adjustments.
+                        <strong style="color: #d42811; font-size: 20px;">NOTE:</strong>
+                        <ul style="list-style-type: disc; padding-left: 20px;">
+                            <li>Always select a shape before applying scaling</li>
+                            <li>Make sure the slider is at zero before making any changes for accurate adjustments</li>
+                            <li>The transformation matrix shows the current scaling state of the selected shape</li>
+                        </ul>
                     </p>
                 </li>
 
@@ -219,7 +261,6 @@
                                     <option value="Cube">Cube</option>
                                     <option value="Tetrahedron">Tetrahedron</option>
                                     <option value="Octahedron">Octahedron</option>
-                                    <option value="Dodecahedron">Dodecahedron</option>
                                 </select>
                             </div>
 
@@ -249,7 +290,6 @@
                                     <option value="Cube">Cube</option>
                                     <option value="Tetrahedron">Tetrahedron</option>
                                     <option value="Octahedron">Octahedron</option>
-                                    <option value="Dodecahedron">Dodecahedron</option>
                                 </select>
                             </div>
 
@@ -301,7 +341,7 @@
                         type="submit" value="Set position">
                 </div> -->
                 <div class="v-datalist-title-shapes">Shapes</div>
-                <div id="shape-list" class="shape-list-container">
+                <div id="shape-list" class="shape-list-container" style="height: 60vh; overflow-y: auto; padding: 15px; background-color: #f8f9fa; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
                     <!-- Shapes will be dynamically added here -->
                 </div>
 
@@ -379,7 +419,7 @@
                             name="noofframes" min="1" step="1" value="1000">
                     </div> -->
 
-                    <form>
+                    <form id="scaling-form">
                         <div class="field-div">
                             <label for="quantity">X</label>
                             <input class="input is-small is-responsive fields" type="number" id="scale-x" name="scale-x"
@@ -414,7 +454,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/gh/virtual-labs/virtual-style@0.0.8-b/js/script.js"></script>
-    <script type="module" src="main.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 
 </html>
