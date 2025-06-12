@@ -1,0 +1,90 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "1. What does scaling transformation in computer graphics primarily involve?",
+      "answers": {
+        "a": "Rotation of objects.",
+        "b": "Changing the shape of objects.",
+        "c": "Altering the position of objects.",
+        "d": "Adjusting the size of objects."
+      },
+      "correctAnswer": "d",
+      "explanations": {
+        "a": "Incorrect. Rotation is a different transformation.",
+        "b": "Incorrect. Changing shape is associated with deformation.",
+        "c": "Incorrect. Translation involves altering position.",
+        "d": "Correct! Scaling transformation primarily adjusts the size of objects."
+      },
+      "difficulty": "beginner"
+    },
+    {
+      "question": "2. Which matrix represents a uniform scaling transformation in 2D?",
+      "answers": {
+        "a": "<img src=\"images/op1.png\">",
+        "b": "<img src=\"images/op2.png\">",
+        "c": "<img src=\"images/op3.png\">",
+        "d": "<img src=\"images/op4.png\">"
+      },
+      "correctAnswer": "a",
+      "explanations": {
+        "a": "Correct! This matrix represents uniform scaling in 2D.",
+        "b": "Incorrect. This matrix represents non-uniform scaling in 2D.",
+        "c": "Incorrect. This matrix represents 3D scaling.",
+        "d": "Incorrect. This is the identity matrix, which results in no scaling."
+      },
+      "difficulty": "beginner"
+    },
+    {
+      "question": "3. What is the formula for scaling a point (x, y) in 2D with scaling factors S<sub>x</sub> and S<sub>y</sub>?",
+      "answers": {
+        "a": "(x * S<sub>y</sub>, y * S<sub>x</sub>)",
+        "b": "(x + S<sub>x</sub>, y + S<sub>y</sub>)",
+        "c": "(x / S<sub>x</sub>, y / S<sub>y</sub>)",
+        "d": "(x * S<sub>x</sub>, y * S<sub>y</sub>)"
+      },
+      "correctAnswer": "d",
+      "explanations": {
+        "a": "Incorrect. Incorrect order of scaling factors.",
+        "b": "Incorrect. Addition is not used for scaling.",
+        "c": "Incorrect. Division is not used for scaling.",
+        "d": "Correct! The formula is (x * Sx, y * Sy) for 2D scaling."
+      },
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "4. What is non-uniform scaling in computer graphics?",
+      "answers": {
+        "a": "Scaling with equal factors along all axes.",
+        "b": "Scaling with different factors along each axis.",
+        "c": "Scaling with negative factors.",
+        "d": "Scaling with a rotation component."
+      },
+      "correctAnswer": "b",
+      "explanations": {
+        "a": "Incorrect. This describes uniform scaling.",
+        "b": "Correct! Non-uniform scaling involves different factors along each axis.",
+        "c": "Incorrect. Negative factors may involve reflection but not non-uniform scaling.",
+        "d": "Incorrect. Rotation is a separate transformation."
+      },
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "5. What is the main advantage of using matrix representation for scaling transformations?",
+      "answers": {
+        "a": "Matrix representation is more efficient for translation.",
+        "b": "Matrix operations can be easily parallelized.",
+        "c": "Matrix representation is only applicable to 3D.",
+        "d": "Matrix representation is not advantageous for scaling."
+      },
+      "correctAnswer": "b",
+      "explanations": {
+        "a": "Incorrect. Matrix representation is more efficient for scaling, not translation.",
+        "b": "Correct! Matrix operations are easily parallelized, offering computational advantages.",
+        "c": "Incorrect. Matrix representation is applicable to both 2D and 3D.",
+        "d": "Incorrect. Matrix representation is advantageous for scaling transformations."
+      },
+      "difficulty": "advanced"
+    }
+  ]
+}

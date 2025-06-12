@@ -1,0 +1,27 @@
+
+/home/runner/work/exp-transformations-scaling-iiith/exp-transformations-scaling-iiith/experiment/simulation/js/main.js
+    7:10  warning  'Triangle' is defined but never used              no-unused-vars
+    8:10  warning  'createMaterials' is defined but never used       no-unused-vars
+    8:27  warning  'getCameraSettings' is defined but never used     no-unused-vars
+   11:7   warning  'moveButton' is assigned a value but never used   no-unused-vars
+   41:5   warning  'noofframes' is assigned a value but never used   no-unused-vars
+   57:3   warning  'lock' is assigned a value but never used         no-unused-vars
+   64:3   warning  'mouse' is assigned a value but never used        no-unused-vars
+   65:3   warning  'raycaster' is assigned a value but never used    no-unused-vars
+   66:3   warning  'plane' is assigned a value but never used        no-unused-vars
+   67:3   warning  'pNormal' is assigned a value but never used      no-unused-vars
+   70:5   warning  'noOfShapes' is assigned a value but never used   no-unused-vars
+  580:36  warning  'coordsArray' is defined but never used           no-unused-vars
+  652:9   warning  'coordsArray' is assigned a value but never used  no-unused-vars
+  829:26  warning  'index' is defined but never used                 no-unused-vars
+  887:26  warning  'index' is defined but never used                 no-unused-vars
+
+/home/runner/work/exp-transformations-scaling-iiith/exp-transformations-scaling-iiith/experiment/simulation/js/materials.js
+   4:10  warning  'vertexShader' is defined but never used    no-unused-vars
+  17:10  warning  'fragmentShader' is defined but never used  no-unused-vars
+
+/home/runner/work/exp-transformations-scaling-iiith/exp-transformations-scaling-iiith/experiment/simulation/js/shapes.js
+  3:27  warning  'getCameraSettings' is defined but never used  no-unused-vars
+
+✖ 18 problems (0 errors, 18 warnings)
+
