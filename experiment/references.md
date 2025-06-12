@@ -1,3 +1,7 @@
-1. [Wikipedia: http://en.wikipedia.org/wiki/Transformation_matrix#Scaling](https://en.wikipedia.org/wiki/Transformation_matrix#Scaling)  
-2. [Wikipedia: Scaling Geometry](https://en.wikipedia.org/wiki/Scaling_(geometry))  
-
+1. [Wikipedia: Transformation Matrix - Scaling](https://en.wikipedia.org/wiki/Transformation_matrix#Scaling)
+2. [Wikipedia: Scaling (Geometry)](<https://en.wikipedia.org/wiki/Scaling_(geometry)>)
+3. [Fundamentals of Computer Graphics, Chapter: Transformations](https://www.crcpress.com/Fundamentals-of-Computer-Graphics/Foley-Dam/p/book/9780367331751)
+4. [Interactive Computer Graphics: A Top-Down Approach with WebGL, Section: Geometric Transformations](https://www.pearson.com/en-us/subject-catalog/p/interactive-computer-graphics-a-top-down-approach-with-webgl/P200000003634/9780133574845)
+5. [OpenGL Programming Guide: Transformations](https://www.khronos.org/opengl/wiki/Transformation)
+6. [Geometric Transformations in 3D Computer Graphics (Tutorial)](https://www.tutorialspoint.com/computer_graphics/3d_transformation.htm)
+7. [Transformation Matrices (Scratchapixel 2.0)](https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/geometry/transforming-objects)
